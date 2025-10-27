@@ -1,0 +1,43 @@
+{
+  "name": "Fomino - Food Delivery",
+  "short_name": "Fomino",
+  "description": "Order delicious food from your favorite restaurants with Fomino. Fast delivery, great prices, and seamless offline experience.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#379465",
+  "orientation": "portrait-primary",
+  "scope": "/",
+  "lang": "en",
+  "categories": ["food", "lifestyle", "shopping"],
+  "icons": [
+    {
+      "src": "/images/favicon.webp",
+      "sizes": "32x32",
+      "type": "image/webp",
+      "purpose": "any"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "My Orders",
+      "short_name": "Orders",
+      "description": "View your order history and track current orders",
+      "url": "/orders"
+    },
+    {
+      "name": "Restaurants",
+      "short_name": "Restaurants",
+      "description": "Browse restaurants and menus",
+      "url": "/restaurants"
+    },
+    {
+      "name": "Cart",
+      "short_name": "Cart",
+      "description": "View your cart and checkout",
+      "url": "/cart"
+    }
+  ],
+  "related_applications": [],
+  "prefer_related_applications": false
+}

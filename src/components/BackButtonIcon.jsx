@@ -1,0 +1,23 @@
+const BackButtonIcon = ({
+  color = "var(--cb-color-text-subdued)",
+  size = "32",
+}) => {
+  return (
+    <svg
+      style={{ fill: color, width: `${size}px`, height: `${size}px` }}
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      class="gnL9bC CvWlzb"
+      tabindex="0"
+      data-test-id="CreationFlow.BackButton"
+    >
+      <path fill="none" d="M0 0h24v24H0z"></path>
+      <path
+        fill="var(--cb-color-text)"
+        d="M22 11.5a.5.5 0 01-.5.5H3.706l6.148 6.146a.502.502 0 01-.708.708l-7-7a.502.502 0 010-.708l7-7a.502.502 0 01.708.708L3.707 11H21.5a.5.5 0 01.5.5"
+      ></path>
+    </svg>
+  );
+};
+
+export default BackButtonIcon;
