@@ -199,7 +199,7 @@ export default function Header(props) {
     deleteProductId,
   } = useContext(dataContext);
 
-  useEffect(() => {}, [
+  useEffect(() => { }, [
     gData,
     groupDrawer,
     isFocused,
@@ -229,6 +229,8 @@ export default function Header(props) {
 
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { t, i18n } = useTranslation();
+  const { data: hSettings } = GetAPI(`users/getHeaderSettings`);
+  const headerSettings = hSettings?.data?.hSettings;
 
   const [xl] = useMediaQuery("(min-width: 1280px)");
   const [lg] = useMediaQuery("(min-width: 1024px)");
@@ -336,16 +338,14 @@ export default function Header(props) {
   const guestFormatAddress = localStorage.getItem("guestFormatAddress");
   const displayAddress =
     guestFormatAddress && guestFormatAddress.length > 0
-      ? `${guestFormatAddress.slice(0, 10)}${
-          guestFormatAddress.length > 10 ? "..." : ""
-        }`
+      ? `${guestFormatAddress.slice(0, 10)}${guestFormatAddress.length > 10 ? "..." : ""
+      }`
       : formatedAdress && formatedAdress.length > 0
-      ? `${formatedAdress.slice(0, 20)}${
-          formatedAdress.length > 10 ? "..." : ""
+        ? `${formatedAdress.slice(0, 20)}${formatedAdress.length > 10 ? "..." : ""
         }`
-      : cityName && cityName.length > 0
-      ? `${cityName.slice(0, 10)}${cityName.length > 10 ? "..." : ""}`
-      : "";
+        : cityName && cityName.length > 0
+          ? `${cityName.slice(0, 10)}${cityName.length > 10 ? "..." : ""}`
+          : "";
 
   const { data: getcountr } = useCountriesAndCities();
   //   const getcountr = GetAPI("users/getCountriesAndCities");
@@ -775,7 +775,7 @@ export default function Header(props) {
   // Extract cart data from the response
   const allCarts =
     allCartsData?.data?.status === "1" &&
-    Array.isArray(allCartsData?.data?.data?.cartData)
+      Array.isArray(allCartsData?.data?.data?.cartData)
       ? allCartsData.data.data.cartData
       : [];
 
@@ -1809,17 +1809,15 @@ export default function Header(props) {
     localStorage.setItem("resId", JSON.stringify(resId));
 
     navigate(
-      `/${clickedCart?.restaurant?.zoneRestaurant?.zone?.city?.country?.shortName.toLowerCase()}/${clickedCart?.restaurant?.city.toLowerCase()}/${
-        clickedCart?.restaurant?.businessType == "1" ? "restaurants" : "stores"
-      }/${
-        clickedCart?.restaurant?.businessName
-          .toLowerCase()
-          ?.split(" ")
-          .join("-") +
-        ("-" +
-          (clickedCart?.restaurant?.businessType == "1" ? "res" : "store") +
-          "-") +
-        clickedCart?.restaurant?.id
+      `/${clickedCart?.restaurant?.zoneRestaurant?.zone?.city?.country?.shortName.toLowerCase()}/${clickedCart?.restaurant?.city.toLowerCase()}/${clickedCart?.restaurant?.businessType == "1" ? "restaurants" : "stores"
+      }/${clickedCart?.restaurant?.businessName
+        .toLowerCase()
+        ?.split(" ")
+        .join("-") +
+      ("-" +
+        (clickedCart?.restaurant?.businessType == "1" ? "res" : "store") +
+        "-") +
+      clickedCart?.restaurant?.id
       }`
     );
   };
@@ -1859,8 +1857,7 @@ export default function Header(props) {
       restaurant.id;
 
     navigate(
-      `/${country.toLowerCase()}/${city.toLowerCase()}/${
-        restaurant.businessType == "1" ? "restaurants" : "stores"
+      `/${country.toLowerCase()}/${city.toLowerCase()}/${restaurant.businessType == "1" ? "restaurants" : "stores"
       }/${businessSlug}`
     );
   };
@@ -2567,12 +2564,12 @@ export default function Header(props) {
         // if how is unset/invalid, pick a mode that supports Standard (prefer Delivery)
         ...(deliveryData.how !== 1 && deliveryData.how !== 2
           ? {
-              how: availability.canDeliverStandard
-                ? 1
-                : availability.canPickupStandard
+            how: availability.canDeliverStandard
+              ? 1
+              : availability.canPickupStandard
                 ? 2
                 : prev.how ?? 1,
-            }
+          }
           : {}),
       }));
       localStorage.setItem("when", "1");
@@ -2647,11 +2644,10 @@ export default function Header(props) {
             {createAccountTab === 1 ? (
               <>
                 <h3
-                  className={`font-sf font-normal ${
-                    modalScroll > 10
-                      ? "text-base text-center mt-2 block"
-                      : "hidden"
-                  }`}
+                  className={`font-sf font-normal ${modalScroll > 10
+                    ? "text-base text-center mt-2 block"
+                    : "hidden"
+                    }`}
                 >
                   Create an account or log in
                 </h3>
@@ -2868,27 +2864,24 @@ export default function Header(props) {
         >
           <ModalHeader px={4}>
             <div
-              className={`flex flex-col  justify-center ${
-                modalScroll > 10 ? "mt-0" : "mt-5"
-              } ${signUpStep === 3 ? "hidden" : "block"}`}
+              className={`flex flex-col  justify-center ${modalScroll > 10 ? "mt-0" : "mt-5"
+                } ${signUpStep === 3 ? "hidden" : "block"}`}
             >
               <h3
-                className={`font-omnes font-bold   ${
-                  modalScroll > 10
-                    ? "text-base text-center mt-2"
-                    : "text-[32px] mt-7"
-                }`}
+                className={`font-omnes font-bold   ${modalScroll > 10
+                  ? "text-base text-center mt-2"
+                  : "text-[32px] mt-7"
+                  }`}
               >
                 {signUpStep === 1
                   ? "Create an account or log in"
                   : signUpStep === 2
-                  ? "Sign up"
-                  : ""}
+                    ? "Sign up"
+                    : ""}
               </h3>
               <p
-                className={`font-normal text-base  text-theme-black-2  font-sf ${
-                  modalScroll > 10 || signUpStep !== 1 ? "hidden" : "block"
-                }`}
+                className={`font-normal text-base  text-theme-black-2  font-sf ${modalScroll > 10 || signUpStep !== 1 ? "hidden" : "block"
+                  }`}
               >
                 Log in below or create a new Fomino account.
               </p>
@@ -2970,7 +2963,7 @@ export default function Header(props) {
                   <form
                     onSubmit={
                       signUpData?.signedFrom === "google" ||
-                      signUpData?.signedFrom === "apple"
+                        signUpData?.signedFrom === "apple"
                         ? signUpWithGoogleFunc
                         : signUpFunc
                     }
@@ -3145,10 +3138,10 @@ export default function Header(props) {
                   forgotStep === 1
                     ? forgotStepOneFunc
                     : forgotStep === 2
-                    ? forgotStepTwoFunc
-                    : forgotStep === 3
-                    ? forgotStepThreeFunc
-                    : ""
+                      ? forgotStepTwoFunc
+                      : forgotStep === 3
+                        ? forgotStepThreeFunc
+                        : ""
                 }
                 className="flex flex-col justify-center items-center gap-y-4 px-5 pb-10  text-center"
               >
@@ -3402,9 +3395,8 @@ export default function Header(props) {
                   }
                   setHasPositionChanged(false);
                 }}
-                className={`flex justify-center items-center text-end rounded-fullest cursor-pointer w-10 h-10 bg-theme-gray-17 hover:bg-theme-gray-16 ${
-                  addressTab === 0 ? "invisible" : "visible"
-                }`}
+                className={`flex justify-center items-center text-end rounded-fullest cursor-pointer w-10 h-10 bg-theme-gray-17 hover:bg-theme-gray-16 ${addressTab === 0 ? "invisible" : "visible"
+                  }`}
               >
                 <FaArrowLeftLong size={20} />
               </button>
@@ -3423,10 +3415,10 @@ export default function Header(props) {
                 {addressTab === 4
                   ? `${deliveryAddress.building}`
                   : addressTab === 0
-                  ? t("Where to?")
-                  : addressTab === 5
-                  ? ` Fomino Cities in ${localStorage.getItem("countryName")}`
-                  : t("Add New Address")}
+                    ? t("Where to?")
+                    : addressTab === 5
+                      ? ` Fomino Cities in ${localStorage.getItem("countryName")}`
+                      : t("Add New Address")}
               </motion.div>
 
               <div
@@ -3467,32 +3459,29 @@ export default function Header(props) {
                               {addr?.AddressType === "Home" ? (
                                 <IoHome
                                   size={28}
-                                  className={`${
-                                    addr?.lat === localStorage.getItem("lat") &&
+                                  className={`${addr?.lat === localStorage.getItem("lat") &&
                                     addr?.lng === localStorage.getItem("lng")
-                                      ? "text-theme-green-2"
-                                      : "text-theme-black-2"
-                                  }`}
+                                    ? "text-theme-green-2"
+                                    : "text-theme-black-2"
+                                    }`}
                                 />
                               ) : addr?.AddressType === "Work" ? (
                                 <ImOffice
                                   size={24}
-                                  className={`${
-                                    addr?.lat === localStorage.getItem("lat") &&
+                                  className={`${addr?.lat === localStorage.getItem("lat") &&
                                     addr?.lng === localStorage.getItem("lng")
-                                      ? "text-theme-green-2"
-                                      : "text-theme-black-2"
-                                  }`}
+                                    ? "text-theme-green-2"
+                                    : "text-theme-black-2"
+                                    }`}
                                 />
                               ) : addr?.AddressType === "Other" ? (
                                 <MdEditCalendar
                                   size={24}
-                                  className={`${
-                                    addr?.lat === localStorage.getItem("lat") &&
+                                  className={`${addr?.lat === localStorage.getItem("lat") &&
                                     addr?.lng === localStorage.getItem("lng")
-                                      ? "text-theme-green-2"
-                                      : "text-theme-black-2"
-                                  }`}
+                                    ? "text-theme-green-2"
+                                    : "text-theme-black-2"
+                                    }`}
                                 />
                               ) : (
                                 <></>
@@ -3501,12 +3490,11 @@ export default function Header(props) {
                             <div className="flex justify-between gap-x-5 items-center w-full ">
                               <div className="flex flex-col">
                                 <p
-                                  className={`text-base font-medium font-sf text-theme-black-2 ${
-                                    addr?.lat === localStorage.getItem("lat") &&
+                                  className={`text-base font-medium font-sf text-theme-black-2 ${addr?.lat === localStorage.getItem("lat") &&
                                     addr?.lng === localStorage.getItem("lng")
-                                      ? "text-theme-green-2"
-                                      : "text-theme-black-2"
-                                  }`}
+                                    ? "text-theme-green-2"
+                                    : "text-theme-black-2"
+                                    }`}
                                 >
                                   {addr?.AddressType}
                                 </p>
@@ -3515,7 +3503,7 @@ export default function Header(props) {
                                 </div>
                               </div>
                               {addr?.lat !== localStorage.getItem("lat") &&
-                              addr?.lng !== localStorage.getItem("lng") ? (
+                                addr?.lng !== localStorage.getItem("lng") ? (
                                 <button
                                   onClick={() => {
                                     localStorage.setItem("lat", addr?.lat);
@@ -3900,11 +3888,10 @@ export default function Header(props) {
                               other: false,
                             })
                           }
-                          className={`text-black flex flex-col justify-between items-center gap-y-3 px-5 py-7 rounded-lg border ${
-                            deliveryAddress.AddressType === "Home"
-                              ? "border-green-700 text-green-700"
-                              : "border-black border-opacity-20 text-black text-opacity-60"
-                          }`}
+                          className={`text-black flex flex-col justify-between items-center gap-y-3 px-5 py-7 rounded-lg border ${deliveryAddress.AddressType === "Home"
+                            ? "border-green-700 text-green-700"
+                            : "border-black border-opacity-20 text-black text-opacity-60"
+                            }`}
                         >
                           <IoHome size={24} />
                           <span className="font-normal text-xl">Home</span>
@@ -3917,11 +3904,10 @@ export default function Header(props) {
                               other: false,
                             })
                           }
-                          className={`text-black flex flex-col justify-between items-center gap-y-3 px-5 py-7 rounded-lg border ${
-                            deliveryAddress.AddressType === "Work"
-                              ? "border-green-700 text-green-700"
-                              : "border-black border-opacity-20 text-black text-opacity-60"
-                          }`}
+                          className={`text-black flex flex-col justify-between items-center gap-y-3 px-5 py-7 rounded-lg border ${deliveryAddress.AddressType === "Work"
+                            ? "border-green-700 text-green-700"
+                            : "border-black border-opacity-20 text-black text-opacity-60"
+                            }`}
                         >
                           <FaBriefcase size={24} />
                           <span className="font-normal text-xl">Work</span>
@@ -3934,11 +3920,10 @@ export default function Header(props) {
                               other: true,
                             })
                           }
-                          className={`text-black flex flex-col justify-between items-center gap-y-3 px-5 py-7 rounded-lg border ${
-                            deliveryAddress.AddressType === "Other"
-                              ? "border-green-700 text-green-700"
-                              : "border-black border-opacity-20 text-black text-opacity-60"
-                          }`}
+                          className={`text-black flex flex-col justify-between items-center gap-y-3 px-5 py-7 rounded-lg border ${deliveryAddress.AddressType === "Other"
+                            ? "border-green-700 text-green-700"
+                            : "border-black border-opacity-20 text-black text-opacity-60"
+                            }`}
                         >
                           <MdLocationPin size={24} />
                           <span className="font-normal text-xl">Other</span>
@@ -4030,18 +4015,17 @@ export default function Header(props) {
                             <div className="flex justify-between gap-x-5 items-center w-full">
                               <div>
                                 <p
-                                  className={`text-base font-medium font-sf text-theme-black-2 ${
-                                    city?.lat === localStorage.getItem("lat") &&
+                                  className={`text-base font-medium font-sf text-theme-black-2 ${city?.lat === localStorage.getItem("lat") &&
                                     city?.lng === localStorage.getItem("lng")
-                                      ? "text-theme-green-2"
-                                      : "text-theme-black-2"
-                                  }`}
+                                    ? "text-theme-green-2"
+                                    : "text-theme-black-2"
+                                    }`}
                                 >
                                   {city.name}
                                 </p>
                               </div>
                               {city?.lat !== localStorage.getItem("lat") ||
-                              city?.lng !== localStorage.getItem("lng") ? (
+                                city?.lng !== localStorage.getItem("lng") ? (
                                 <button
                                   onClick={() => {
                                     localStorage.setItem("lat", city?.lat);
@@ -4115,18 +4099,17 @@ export default function Header(props) {
                           <div className="flex justify-between gap-x-5 items-center w-full">
                             <div>
                               <p
-                                className={`text-base font-medium font-sf text-theme-black-2 ${
-                                  countr?.lat === localStorage.getItem("lat") &&
+                                className={`text-base font-medium font-sf text-theme-black-2 ${countr?.lat === localStorage.getItem("lat") &&
                                   countr?.lng === localStorage.getItem("lng")
-                                    ? "text-theme-green-2"
-                                    : "text-theme-black-2"
-                                }`}
+                                  ? "text-theme-green-2"
+                                  : "text-theme-black-2"
+                                  }`}
                               >
                                 {countr.name}
                               </p>
                             </div>
                             {countr?.lat !== localStorage.getItem("lat") ||
-                            countr?.lng !== localStorage.getItem("lng") ? (
+                              countr?.lng !== localStorage.getItem("lng") ? (
                               <button
                                 onClick={() => {
                                   localStorage.setItem(
@@ -4190,20 +4173,19 @@ export default function Header(props) {
                   detailsTab === 1
                     ? setDetailsTab(0)
                     : detailsTab === 2
-                    ? setDetailsTab(1)
-                    : detailsTab === 3
-                    ? setDetailsTab(2)
-                    : detailsTab === 4
-                    ? setDetailsTab(3)
-                    : detailsTab === 5
-                    ? setDetailsTab(4)
-                    : null;
+                      ? setDetailsTab(1)
+                      : detailsTab === 3
+                        ? setDetailsTab(2)
+                        : detailsTab === 4
+                          ? setDetailsTab(3)
+                          : detailsTab === 5
+                            ? setDetailsTab(4)
+                            : null;
 
                   setHasPositionChanged(false);
                 }}
-                className={`flex justify-center items-center text-end rounded-fullest cursor-pointer w-10 h-10 bg-theme-gray-17 hover:bg-theme-gray-16 ${
-                  detailsTab === 0 ? "invisible" : "visible"
-                }`}
+                className={`flex justify-center items-center text-end rounded-fullest cursor-pointer w-10 h-10 bg-theme-gray-17 hover:bg-theme-gray-16 ${detailsTab === 0 ? "invisible" : "visible"
+                  }`}
               >
                 <FaArrowLeftLong size={20} />
               </button>
@@ -4222,10 +4204,10 @@ export default function Header(props) {
                 {detailsTab === 0
                   ? t("Order Details")
                   : detailsTab === 1
-                  ? t("Where to?")
-                  : detailsTab === 5
-                  ? `${deliveryAddress.building}`
-                  : t("Add New Address")}
+                    ? t("Where to?")
+                    : detailsTab === 5
+                      ? `${deliveryAddress.building}`
+                      : t("Add New Address")}
               </motion.div>
               <div
                 onClick={closeDetailsModal}
@@ -4252,13 +4234,11 @@ export default function Header(props) {
                         localStorage.setItem("how", 1);
                       }}
                       disabled={buttonStates.disableDelivery}
-                      className={`py-2 px-5 font-bold text-base flex items-center justify-center gap-x-2 rounded-full text-theme-black-2 ${
-                        deliveryData.how === 1 ? "bg-white" : "bg-transparent"
-                      } ${
-                        buttonStates.disableDelivery
+                      className={`py-2 px-5 font-bold text-base flex items-center justify-center gap-x-2 rounded-full text-theme-black-2 ${deliveryData.how === 1 ? "bg-white" : "bg-transparent"
+                        } ${buttonStates.disableDelivery
                           ? "opacity-50 cursor-not-allowed"
                           : ""
-                      }`}
+                        }`}
                     >
                       <BiCycling size={24} />
                       <span>{t("Delivery")}</span>
@@ -4269,13 +4249,11 @@ export default function Header(props) {
                         localStorage.setItem("how", 2);
                       }}
                       disabled={buttonStates.disablePickup}
-                      className={`py-2 px-5 font-bold text-base flex items-center justify-center gap-x-2 rounded-full text-theme-black-2 ${
-                        deliveryData.how === 2 ? "bg-white" : "bg-transparent"
-                      } ${
-                        buttonStates.disablePickup
+                      className={`py-2 px-5 font-bold text-base flex items-center justify-center gap-x-2 rounded-full text-theme-black-2 ${deliveryData.how === 2 ? "bg-white" : "bg-transparent"
+                        } ${buttonStates.disablePickup
                           ? "opacity-50 cursor-not-allowed"
                           : ""
-                      }`}
+                        }`}
                     >
                       <FaWalking size={24} />
                       <span>{t("Pickup")}</span>
@@ -4334,13 +4312,11 @@ export default function Header(props) {
                       When?
                     </div>
                     <div
-                      className={`flex items-center space-x-4 px-4 py-3 mt-4 border-2 rounded-lg ${
-                        deliveryData.when === 1 ? "border-theme-green-2" : ""
-                      } ${
-                        buttonStates.disableStandard
+                      className={`flex items-center space-x-4 px-4 py-3 mt-4 border-2 rounded-lg ${deliveryData.when === 1 ? "border-theme-green-2" : ""
+                        } ${buttonStates.disableStandard
                           ? "cursor-not-allowed opacity-50"
                           : ""
-                      }`}
+                        }`}
                     >
                       {/* <input
                         onChange={() => {
@@ -4377,9 +4353,8 @@ export default function Header(props) {
                       />
                       <label
                         htmlFor="when-asap"
-                        className={`w-full cursor-pointer flex items-center space-x-4 ${
-                          buttonStates.disableStandard ? "text-gray-400" : ""
-                        }`}
+                        className={`w-full cursor-pointer flex items-center space-x-4 ${buttonStates.disableStandard ? "text-gray-400" : ""
+                          }`}
                       >
                         <div>
                           <label className="font-sf font-semibold text-base">
@@ -4388,24 +4363,22 @@ export default function Header(props) {
                           <p className="text-sm font-light text-checkoutTextColor/65">
                             {deliveryData?.how === 1
                               ? activeResData?.deliveryTime?.split(" ")[0] +
-                                "-" +
-                                (parseInt(activeResData?.deliveryTime) + 10)
+                              "-" +
+                              (parseInt(activeResData?.deliveryTime) + 10)
                               : activeResData?.pickupTime?.split(" ")[0] +
-                                "-" +
-                                (parseInt(activeResData?.pickupTime) + 10)}{" "}
+                              "-" +
+                              (parseInt(activeResData?.pickupTime) + 10)}{" "}
                             min
                           </p>
                         </div>
                       </label>
                     </div>
                     <div
-                      className={`flex items-center space-x-4 px-4 py-3 mt-2 border-2 rounded-lg ${
-                        deliveryData.when === 2 ? "border-theme-green-2" : ""
-                      } ${
-                        buttonStates.disableSchedule
+                      className={`flex items-center space-x-4 px-4 py-3 mt-2 border-2 rounded-lg ${deliveryData.when === 2 ? "border-theme-green-2" : ""
+                        } ${buttonStates.disableSchedule
                           ? "cursor-not-allowed opacity-50"
                           : ""
-                      }`}
+                        }`}
                     >
                       {/* <input
                         onChange={() => {
@@ -4597,7 +4570,7 @@ export default function Header(props) {
                                 </div>
                               </div>
                               {addr?.lat !== localStorage.getItem("lat") &&
-                              addr?.lng !== localStorage.getItem("lng") ? (
+                                addr?.lng !== localStorage.getItem("lng") ? (
                                 <div className="">
                                   <button
                                     onClick={() => {
@@ -4641,7 +4614,7 @@ export default function Header(props) {
 
                           {index !==
                             userAddresses?.data?.data?.addressList.length -
-                              1 && <hr className="max-w-[32.7rem] ms-auto" />}
+                            1 && <hr className="max-w-[32.7rem] ms-auto" />}
                         </div>
                       ))}
                   </div>
@@ -4985,11 +4958,10 @@ export default function Header(props) {
                               other: false,
                             })
                           }
-                          className={`text-black flex flex-col justify-between items-center gap-y-3 px-5 py-7 rounded-lg border ${
-                            deliveryAddress.AddressType === "Home"
-                              ? "border-green-700 text-green-700"
-                              : "border-black border-opacity-20 text-black text-opacity-60"
-                          }`}
+                          className={`text-black flex flex-col justify-between items-center gap-y-3 px-5 py-7 rounded-lg border ${deliveryAddress.AddressType === "Home"
+                            ? "border-green-700 text-green-700"
+                            : "border-black border-opacity-20 text-black text-opacity-60"
+                            }`}
                         >
                           <IoHome size={24} />
                           <span className="font-normal text-xl">Home</span>
@@ -5002,11 +4974,10 @@ export default function Header(props) {
                               other: false,
                             })
                           }
-                          className={`text-black flex flex-col justify-between items-center gap-y-3 px-5 py-7 rounded-lg border ${
-                            deliveryAddress.AddressType === "Work"
-                              ? "border-green-700 text-green-700"
-                              : "border-black border-opacity-20 text-black text-opacity-60"
-                          }`}
+                          className={`text-black flex flex-col justify-between items-center gap-y-3 px-5 py-7 rounded-lg border ${deliveryAddress.AddressType === "Work"
+                            ? "border-green-700 text-green-700"
+                            : "border-black border-opacity-20 text-black text-opacity-60"
+                            }`}
                         >
                           <FaBriefcase size={24} />
                           <span className="font-normal text-xl">Work</span>
@@ -5019,11 +4990,10 @@ export default function Header(props) {
                               other: true,
                             })
                           }
-                          className={`text-black flex flex-col justify-between items-center gap-y-3 px-5 py-7 rounded-lg border ${
-                            deliveryAddress.AddressType === "Other"
-                              ? "border-green-700 text-green-700"
-                              : "border-black border-opacity-20 text-black text-opacity-60"
-                          }`}
+                          className={`text-black flex flex-col justify-between items-center gap-y-3 px-5 py-7 rounded-lg border ${deliveryAddress.AddressType === "Other"
+                            ? "border-green-700 text-green-700"
+                            : "border-black border-opacity-20 text-black text-opacity-60"
+                            }`}
                         >
                           <MdLocationPin size={24} />
                           <span className="font-normal text-xl">Other</span>
@@ -5139,9 +5109,8 @@ export default function Header(props) {
               <div></div>
             ) : (
               <h3
-                className={`${
-                  modalScroll > 192 ? "block" : "hidden"
-                } text-base text-center capitalize my-5 font-sf font-medium text-theme-black-2`}
+                className={`${modalScroll > 192 ? "block" : "hidden"
+                  } text-base text-center capitalize my-5 font-sf font-medium text-theme-black-2`}
               >
                 {searchItemModalData?.name}
               </h3>
@@ -5199,23 +5168,21 @@ export default function Header(props) {
                 <div
                   onClick={() => {
                     navigate(
-                      `/${countryCode?.toLowerCase()}/${cityName.toLowerCase()}/${
-                        searchItemModalData?.R_MCLink?.restaurant
+                      `/${countryCode?.toLowerCase()}/${cityName.toLowerCase()}/${searchItemModalData?.R_MCLink?.restaurant
+                        ?.businessType == "1"
+                        ? "restaurants"
+                        : "stores"
+                      }/${searchItemModalData?.R_MCLink?.restaurant?.businessName
+                        .toLowerCase()
+                        ?.split(" ")
+                        .join("-") +
+                      ("-" +
+                        (searchItemModalData?.R_MCLink?.restaurant
                           ?.businessType == "1"
-                          ? "restaurants"
-                          : "stores"
-                      }/${
-                        searchItemModalData?.R_MCLink?.restaurant?.businessName
-                          .toLowerCase()
-                          ?.split(" ")
-                          .join("-") +
-                        ("-" +
-                          (searchItemModalData?.R_MCLink?.restaurant
-                            ?.businessType == "1"
-                            ? "res"
-                            : "store") +
-                          "-") +
-                        searchItemModalData?.R_MCLink?.restaurant?.id
+                          ? "res"
+                          : "store") +
+                        "-") +
+                      searchItemModalData?.R_MCLink?.restaurant?.id
                       }`
                     );
                   }}
@@ -5259,30 +5226,27 @@ export default function Header(props) {
             <div
               onClick={() => {
                 navigate(
-                  `/${countryCode?.toLowerCase()}/${cityName?.toLowerCase()}/${
-                    searchItemModalData?.R_MCLink?.restaurant?.businessType ==
+                  `/${countryCode?.toLowerCase()}/${cityName?.toLowerCase()}/${searchItemModalData?.R_MCLink?.restaurant?.businessType ==
                     "1"
-                      ? "restaurants"
-                      : "stores"
-                  }/${
-                    searchItemModalData?.R_MCLink?.restaurant?.businessName
-                      .toLowerCase()
-                      ?.split(" ")
-                      .join("-") +
-                    ("-" +
-                      (searchItemModalData?.R_MCLink?.restaurant
-                        ?.businessType == "1"
-                        ? "res"
-                        : "store") +
-                      "-") +
-                    searchItemModalData?.R_MCLink?.restaurant?.id
-                  }/${
-                    searchItemModalData?.name
-                      ?.toLowerCase()
-                      .split(" ")
-                      .join("-") +
-                    "-" +
-                    searchItemModalData?.id
+                    ? "restaurants"
+                    : "stores"
+                  }/${searchItemModalData?.R_MCLink?.restaurant?.businessName
+                    .toLowerCase()
+                    ?.split(" ")
+                    .join("-") +
+                  ("-" +
+                    (searchItemModalData?.R_MCLink?.restaurant
+                      ?.businessType == "1"
+                      ? "res"
+                      : "store") +
+                    "-") +
+                  searchItemModalData?.R_MCLink?.restaurant?.id
+                  }/${searchItemModalData?.name
+                    ?.toLowerCase()
+                    .split(" ")
+                    .join("-") +
+                  "-" +
+                  searchItemModalData?.id
                   }`
                 );
                 setHeaderSearch({ ...headerSearch, isOpen: false });
@@ -5474,22 +5438,21 @@ export default function Header(props) {
                     <span className="me-2">Howdy</span>
                     {localStorage.getItem("userName")
                       ? (() => {
-                          const fullName = localStorage.getItem("userName");
-                          const [firstName] = fullName.split(" ");
-                          return `${firstName} `;
-                        })()
+                        const fullName = localStorage.getItem("userName");
+                        const [firstName] = fullName.split(" ");
+                        return `${firstName} `;
+                      })()
                       : "User"}
                   </h1>
                   <div className="flex  items-start justify-start gap-7">
                     <div
-                      className={` h-[120px] uppercase font-bold text-3xl  rounded-full w-[120px] md:h-[120px] flex justify-center items-center ${
-                        localStorage.getItem("loginStatus") === "true"
-                          ? "bg-theme-red bg-opacity-20 text-theme-red"
-                          : "bg-theme-gray-6 bg-opacity-60 text-white"
-                      }`}
+                      className={` h-[120px] uppercase font-bold text-3xl  rounded-full w-[120px] md:h-[120px] flex justify-center items-center ${localStorage.getItem("loginStatus") === "true"
+                        ? "bg-theme-red bg-opacity-20 text-theme-red"
+                        : "bg-theme-gray-6 bg-opacity-60 text-white"
+                        }`}
                     >
                       {localStorage.getItem("loginStatus") === "true" &&
-                      localStorage.getItem("userName").length > 0 ? (
+                        localStorage.getItem("userName").length > 0 ? (
                         getProfile?.data?.data?.image ? (
                           <img
                             src={`${BASE_URL}${getProfile?.data?.data?.image}`}
@@ -5498,15 +5461,13 @@ export default function Header(props) {
                           />
                         ) : (
                           <span className="initials">
-                            {`${
-                              extractFirstLetters(
-                                localStorage.getItem("userName")
-                              )?.firstLetter
-                            }${
-                              extractFirstLetters(
+                            {`${extractFirstLetters(
+                              localStorage.getItem("userName")
+                            )?.firstLetter
+                              }${extractFirstLetters(
                                 localStorage.getItem("userName")
                               )?.secondLetter
-                            }`}
+                              }`}
                           </span>
                         )
                       ) : (
@@ -5946,11 +5907,10 @@ export default function Header(props) {
                 </button>
               </div>
               <div
-                className={` flex flex-col justify-between  ${
-                  drawerMsg === false && !props?.home
-                    ? "min-h-[64vh]  "
-                    : "h-auto "
-                } `}
+                className={` flex flex-col justify-between  ${drawerMsg === false && !props?.home
+                  ? "min-h-[64vh]  "
+                  : "h-auto "
+                  } `}
               >
                 {props.cart && props.home && !props.rest ? (
                   <div>
@@ -5998,55 +5958,51 @@ export default function Header(props) {
                                 <div className="capitalize text-sm font-light text-[rgba(32,33,37,.9)] ">
                                   <ul>
                                     {cartI?.addOnsCat &&
-                                    cartI?.addOnsCat?.length > 0
+                                      cartI?.addOnsCat?.length > 0
                                       ? cartI?.addOnsCat
-                                          ?.filter(
-                                            (ele) =>
-                                              ele?.id ===
-                                              cartI?.addOns?.find(
+                                        ?.filter(
+                                          (ele) =>
+                                            ele?.id ===
+                                            cartI?.addOns?.find(
+                                              (fil) =>
+                                                fil?.collectionId === ele?.id
+                                            )?.collectionId
+                                        )
+                                        ?.map((cat, key) => (
+                                          <li key={key}>
+                                            <span>{cat?.name}: </span>
+                                            <br />
+                                            {cartI?.addOns
+                                              ?.filter(
                                                 (fil) =>
-                                                  fil?.collectionId === ele?.id
-                                              )?.collectionId
-                                          )
-                                          ?.map((cat, key) => (
-                                            <li key={key}>
-                                              <span>{cat?.name}: </span>
-                                              <br />
-                                              {cartI?.addOns
-                                                ?.filter(
-                                                  (fil) =>
-                                                    fil?.collectionId ===
-                                                    cat?.id
-                                                )
-                                                ?.map((add, addKey) => (
-                                                  <div
-                                                    key={addKey}
-                                                    className="ml-2 mt-1"
-                                                  >
-                                                    {`${add?.quantity}x ${
-                                                      add?.name
-                                                    } ${
-                                                      add?.total > 0
-                                                        ? `(${add?.total}.00)`
-                                                        : ""
+                                                  fil?.collectionId ===
+                                                  cat?.id
+                                              )
+                                              ?.map((add, addKey) => (
+                                                <div
+                                                  key={addKey}
+                                                  className="ml-2 mt-1"
+                                                >
+                                                  {`${add?.quantity}x ${add?.name
+                                                    } ${add?.total > 0
+                                                      ? `(${add?.total}.00)`
+                                                      : ""
                                                     }`}
-                                                  </div>
-                                                ))}
-                                            </li>
-                                          ))
-                                      : cartI?.addOns?.map((add, addKey) => (
-                                          <li key={addKey}>
-                                            <div className="ml-2 mt-1">
-                                              {`${add?.quantity}x ${
-                                                add?.name
-                                              } ${
-                                                add?.total > 0
-                                                  ? `(${add?.total}.00)`
-                                                  : ""
-                                              }`}
-                                            </div>
+                                                </div>
+                                              ))}
                                           </li>
-                                        ))}
+                                        ))
+                                      : cartI?.addOns?.map((add, addKey) => (
+                                        <li key={addKey}>
+                                          <div className="ml-2 mt-1">
+                                            {`${add?.quantity}x ${add?.name
+                                              } ${add?.total > 0
+                                                ? `(${add?.total}.00)`
+                                                : ""
+                                              }`}
+                                          </div>
+                                        </li>
+                                      ))}
                                   </ul>
                                 </div>
                                 <div className="flex items-center justify-between">
@@ -6059,12 +6015,12 @@ export default function Header(props) {
                                               return (
                                                 accumulator +
                                                 (ele?.total || 0) *
-                                                  (ele?.quantity || 1)
+                                                (ele?.quantity || 1)
                                               );
                                             },
                                             0
                                           )) *
-                                          cartI?.quantity
+                                        cartI?.quantity
                                       )}
                                       {activeResData?.currencyUnit || "CHF"}
                                     </span>
@@ -6190,10 +6146,9 @@ export default function Header(props) {
                                           );
                                           setCounter(null);
                                           navigate(
-                                            `${
-                                              location.pathname === "/"
-                                                ? ""
-                                                : location.pathname
+                                            `${location.pathname === "/"
+                                              ? ""
+                                              : location.pathname
                                             }${location.search}`
                                           );
                                         }
@@ -6231,11 +6186,10 @@ export default function Header(props) {
                             setTabState({ selected: 1 });
                             localStorage.setItem("how", 1);
                           }}
-                          className={`relative py-2 px-5 font-semibold text-base flex items-center justify-center gap-x-2 rounded-full text-theme-black-2 ${
-                            tabState.selected === 1
-                              ? "bg-white"
-                              : "bg-transparent"
-                          }`}
+                          className={`relative py-2 px-5 font-semibold text-base flex items-center justify-center gap-x-2 rounded-full text-theme-black-2 ${tabState.selected === 1
+                            ? "bg-white"
+                            : "bg-transparent"
+                            }`}
                         >
                           {tabState.selected === 1 && (
                             <motion.span
@@ -6259,11 +6213,10 @@ export default function Header(props) {
                             setTabState({ selected: 2 });
                             localStorage.setItem("how", 2);
                           }}
-                          className={`relative py-2 px-5 font-semibold text-base flex items-center justify-center gap-x-2 rounded-full text-theme-black-2 ${
-                            tabState.selected === 2
-                              ? "bg-white"
-                              : "bg-transparent"
-                          }`}
+                          className={`relative py-2 px-5 font-semibold text-base flex items-center justify-center gap-x-2 rounded-full text-theme-black-2 ${tabState.selected === 2
+                            ? "bg-white"
+                            : "bg-transparent"
+                            }`}
                         >
                           {tabState.selected === 2 && (
                             <motion.span
@@ -6318,7 +6271,7 @@ export default function Header(props) {
                                   return (
                                     a +
                                     (parseFloat(addOn.total) || 0) *
-                                      (parseInt(addOn.quantity) || 1)
+                                    (parseInt(addOn.quantity) || 1)
                                   );
                                 },
                                 0
@@ -6344,8 +6297,8 @@ export default function Header(props) {
                                         endColor="gray.100"
                                       >
                                         <img
-                                          src={`${BASE_URL}${cart.restaurant.logo}`}
-                                          alt={cart.restaurant.businessName}
+                                          src={`${BASE_URL}${cart?.restaurant?.logo}`}
+                                          alt={cart?.restaurant?.businessName}
                                           onLoad={() => handleLogoLoad(cart.id)}
                                           className="w-full h-full object-cover rounded-lg"
                                           style={{
@@ -6358,10 +6311,10 @@ export default function Header(props) {
                                     </div>
                                     <div className="space-y-1">
                                       <h2 className="font-semibold text-theme-black-2 text-opacity-95">
-                                        {cart.restaurant.businessName}
+                                        {cart?.restaurant?.businessName}
                                       </h2>
                                       <p className="text-sm text-theme-black-2 text-opacity-65">
-                                        {`Approx delivery: ${cart.restaurant.approxDeliveryTime} mins`}
+                                        {`Approx delivery: ${cart?.restaurant?.approxDeliveryTime} mins`}
                                       </p>
                                     </div>
                                   </div>
@@ -6393,7 +6346,7 @@ export default function Header(props) {
 
                                 <h2 className="font-semibold text-theme-black-2 px-4 mt-4 text-sm">
                                   Item subtotal: {subtotal.toFixed(2)}{" "}
-                                  {cart.restaurant.zoneRestaurant?.zone
+                                  {cart?.restaurant?.zoneRestaurant?.zone
                                     ?.zoneDetail?.currencyUnit?.symbol || "CHF"}
                                 </h2>
 
@@ -6463,12 +6416,12 @@ export default function Header(props) {
                                     style={{
                                       backgroundColor:
                                         order.orderStatus?.displayText ===
-                                        "Reject"
+                                          "Reject"
                                           ? "#F56565"
                                           : order.orderStatus?.displayText ===
                                             "Delivered"
-                                          ? "#48BB78"
-                                          : "#ECC94B",
+                                            ? "#48BB78"
+                                            : "#ECC94B",
                                     }}
                                   >
                                     {order.orderStatus?.displayText}
@@ -6589,56 +6542,52 @@ export default function Header(props) {
                                   <div className="capitalize text-sm font-light text-[rgba(32,33,37,.9)] ">
                                     <ul>
                                       {cartI?.addOnsCat &&
-                                      cartI?.addOnsCat?.length > 0
+                                        cartI?.addOnsCat?.length > 0
                                         ? cartI?.addOnsCat
-                                            ?.filter(
-                                              (ele) =>
-                                                ele?.id ===
-                                                cartI?.addOns?.find(
+                                          ?.filter(
+                                            (ele) =>
+                                              ele?.id ===
+                                              cartI?.addOns?.find(
+                                                (fil) =>
+                                                  fil?.collectionId ===
+                                                  ele?.id
+                                              )?.collectionId
+                                          )
+                                          ?.map((cat, key) => (
+                                            <li key={key}>
+                                              <span>{cat?.name}: </span>
+                                              <br />
+                                              {cartI?.addOns
+                                                ?.filter(
                                                   (fil) =>
                                                     fil?.collectionId ===
-                                                    ele?.id
-                                                )?.collectionId
-                                            )
-                                            ?.map((cat, key) => (
-                                              <li key={key}>
-                                                <span>{cat?.name}: </span>
-                                                <br />
-                                                {cartI?.addOns
-                                                  ?.filter(
-                                                    (fil) =>
-                                                      fil?.collectionId ===
-                                                      cat?.id
-                                                  )
-                                                  ?.map((add, addKey) => (
-                                                    <div
-                                                      key={addKey}
-                                                      className="ml-2 mt-1"
-                                                    >
-                                                      {`${add?.quantity}x ${
-                                                        add?.name
-                                                      } ${
-                                                        add?.total > 0
-                                                          ? `(${add?.total}.00)`
-                                                          : ""
+                                                    cat?.id
+                                                )
+                                                ?.map((add, addKey) => (
+                                                  <div
+                                                    key={addKey}
+                                                    className="ml-2 mt-1"
+                                                  >
+                                                    {`${add?.quantity}x ${add?.name
+                                                      } ${add?.total > 0
+                                                        ? `(${add?.total}.00)`
+                                                        : ""
                                                       }`}
-                                                    </div>
-                                                  ))}
-                                              </li>
-                                            ))
-                                        : cartI?.addOns?.map((add, addKey) => (
-                                            <li key={addKey}>
-                                              <div className="ml-2 mt-1">
-                                                {`${add?.quantity}x ${
-                                                  add?.name
-                                                } ${
-                                                  add?.total > 0
-                                                    ? `(${add?.total}.00)`
-                                                    : ""
-                                                }`}
-                                              </div>
+                                                  </div>
+                                                ))}
                                             </li>
-                                          ))}
+                                          ))
+                                        : cartI?.addOns?.map((add, addKey) => (
+                                          <li key={addKey}>
+                                            <div className="ml-2 mt-1">
+                                              {`${add?.quantity}x ${add?.name
+                                                } ${add?.total > 0
+                                                  ? `(${add?.total}.00)`
+                                                  : ""
+                                                }`}
+                                            </div>
+                                          </li>
+                                        ))}
                                     </ul>
                                   </div>
                                   <div className="flex items-center justify-between">
@@ -6651,12 +6600,12 @@ export default function Header(props) {
                                                 return (
                                                   accumulator +
                                                   (ele?.total || 0) *
-                                                    (ele?.quantity || 1)
+                                                  (ele?.quantity || 1)
                                                 );
                                               },
                                               0
                                             )) *
-                                            cartI?.quantity
+                                          cartI?.quantity
                                         )}
                                         {activeResData?.currencyUnit || "CHF"}
                                       </span>
@@ -6788,10 +6737,9 @@ export default function Header(props) {
                                             );
                                             setCounter(null);
                                             navigate(
-                                              `${
-                                                location.pathname === "/"
-                                                  ? ""
-                                                  : location.pathname
+                                              `${location.pathname === "/"
+                                                ? ""
+                                                : location.pathname
                                               }${location.search}`
                                             );
                                           }
@@ -6950,8 +6898,8 @@ export default function Header(props) {
                                                   prod.name,
                                                   prod.discountPrice,
                                                   prod.currencySign ||
-                                                    data?.data?.currencyUnit ||
-                                                    "CHF",
+                                                  data?.data?.currencyUnit ||
+                                                  "CHF",
                                                   prod.description,
                                                   [],
                                                   [],
@@ -7102,13 +7050,11 @@ export default function Header(props) {
                                                   key={addKey}
                                                   className="ml-2 mt-1"
                                                 >
-                                                  {`${add?.quantity}x ${
-                                                    add?.name
-                                                  } ${
-                                                    add?.total > 0
+                                                  {`${add?.quantity}x ${add?.name
+                                                    } ${add?.total > 0
                                                       ? `(${add?.total}.00)`
                                                       : ""
-                                                  }`}
+                                                    }`}
                                                 </div>
                                               ))}
                                           </li>
@@ -7125,12 +7071,12 @@ export default function Header(props) {
                                                 return (
                                                   accumulator +
                                                   (ele?.total || 0) *
-                                                    (ele?.quantity || 1)
+                                                  (ele?.quantity || 1)
                                                 );
                                               },
                                               0
                                             )) *
-                                            cartI?.quantity
+                                          cartI?.quantity
                                         )}
                                         {cartI?.currencySign}
                                       </span>
@@ -7148,11 +7094,10 @@ export default function Header(props) {
                                             "replace"
                                           );
                                         }}
-                                        className={`border-2 rounded-full py-1 ${
-                                          cartI?.isSubstitutionAllow == true
-                                            ? "border-theme-green-2 text-theme-black-2"
-                                            : "text-theme-black-2/60"
-                                        }`}
+                                        className={`border-2 rounded-full py-1 ${cartI?.isSubstitutionAllow == true
+                                          ? "border-theme-green-2 text-theme-black-2"
+                                          : "text-theme-black-2/60"
+                                          }`}
                                       >
                                         Replace
                                       </button>
@@ -7163,11 +7108,10 @@ export default function Header(props) {
                                             "refund"
                                           );
                                         }}
-                                        className={`border-2 rounded-full py-1  ${
-                                          !cartI?.isSubstitutionAllow
-                                            ? "border-theme-green-2 text-theme-black-2"
-                                            : "text-theme-black-2/60"
-                                        }`}
+                                        className={`border-2 rounded-full py-1  ${!cartI?.isSubstitutionAllow
+                                          ? "border-theme-green-2 text-theme-black-2"
+                                          : "text-theme-black-2/60"
+                                          }`}
                                       >
                                         Refund
                                       </button>
@@ -7201,11 +7145,10 @@ export default function Header(props) {
                                           });
                                         }
                                       }}
-                                      className={`font-medium text-sm ${
-                                        !cartI?.isSubstitutionAllow
-                                          ? "text-gray-500"
-                                          : "text-red-500"
-                                      } `}
+                                      className={`font-medium text-sm ${!cartI?.isSubstitutionAllow
+                                        ? "text-gray-500"
+                                        : "text-red-500"
+                                        } `}
                                     >
                                       {replacewith?.id?.includes(
                                         cartI?.RPLinkId
@@ -7540,11 +7483,10 @@ export default function Header(props) {
                                       )
                                       ?.map((add, addKey) => (
                                         <div key={addKey} className="ml-2 mt-1">
-                                          {`${add?.quantity}x ${add?.name} ${
-                                            add?.total > 0
-                                              ? `(${add?.total}.00)`
-                                              : ""
-                                          }`}
+                                          {`${add?.quantity}x ${add?.name} ${add?.total > 0
+                                            ? `(${add?.total}.00)`
+                                            : ""
+                                            }`}
                                         </div>
                                       ))}
                                   </li>
@@ -7561,12 +7503,12 @@ export default function Header(props) {
                                         return (
                                           accumulator +
                                           (ele?.total || 0) *
-                                            (ele?.quantity || 1)
+                                          (ele?.quantity || 1)
                                         );
                                       },
                                       0
                                     )) *
-                                    cartI?.quantity
+                                  cartI?.quantity
                                 )}
                                 {localStorage.getItem("groupData")
                                   ? gData?.currencyDetails?.symbol
@@ -7685,9 +7627,8 @@ export default function Header(props) {
                   <h4 className="font-bold font-omnes text-xl">Participants</h4>
                   <div className="flex gap-x-2 w-full [&>p]:cursor-pointer [&>p]:text-center my-8 border-b [&>p]:pb-2">
                     <p
-                      className={`hover:text-red-500 w-1/2 ${
-                        ready.show == 0 && "border-b-red-500 border-b-2"
-                      }`}
+                      className={`hover:text-red-500 w-1/2 ${ready.show == 0 && "border-b-red-500 border-b-2"
+                        }`}
                       onClick={() => setReady({ ...ready, show: 0 })}
                     >
                       Not ready:{" "}
@@ -7698,9 +7639,8 @@ export default function Header(props) {
                       }
                     </p>
                     <p
-                      className={`hover:text-red-500 w-1/2 ${
-                        ready.show == 1 && "border-b-red-500 border-b-2"
-                      }`}
+                      className={`hover:text-red-500 w-1/2 ${ready.show == 1 && "border-b-red-500 border-b-2"
+                        }`}
                       onClick={() => setReady({ ...ready, show: 1 })}
                     >
                       Ready:{" "}
@@ -7742,7 +7682,7 @@ export default function Header(props) {
                                   <h4 className="text-lg">
                                     {participant?.participantName}
                                     {gData?.hostebBy?.id ==
-                                    participant?.participantId ? (
+                                      participant?.participantId ? (
                                       <sup className="bg-black text-white rounded-md p-1 ml-4">
                                         Host
                                       </sup>
@@ -7750,18 +7690,18 @@ export default function Header(props) {
                                       <div>
                                         {gData?.hostebBy?.id ==
                                           localStorage.getItem("userId") && (
-                                          <div
-                                            className="w-8 h-8 bg-red-50 rounded-full flex items-center justify-center p-2 absolute right-0 top-0 cursor-pointer"
-                                            onClick={() =>
-                                              removeMember(
-                                                gData?.orderId,
-                                                participant?.participantId
-                                              )
-                                            }
-                                          >
-                                            <RiDeleteBinLine />
-                                          </div>
-                                        )}
+                                            <div
+                                              className="w-8 h-8 bg-red-50 rounded-full flex items-center justify-center p-2 absolute right-0 top-0 cursor-pointer"
+                                              onClick={() =>
+                                                removeMember(
+                                                  gData?.orderId,
+                                                  participant?.participantId
+                                                )
+                                              }
+                                            >
+                                              <RiDeleteBinLine />
+                                            </div>
+                                          )}
                                       </div>
                                     )}
                                   </h4>
@@ -7770,12 +7710,11 @@ export default function Header(props) {
                                     Choosing items &bull;{" "}
                                     {participant?.items?.length} items{" "}
                                     <IoIosArrowDown
-                                      className={`${
-                                        participant?.participantId ===
-                                          group?.viewSelection && group.liShow
-                                          ? "rotate-180"
-                                          : ""
-                                      }`}
+                                      className={`${participant?.participantId ===
+                                        group?.viewSelection && group.liShow
+                                        ? "rotate-180"
+                                        : ""
+                                        }`}
                                     />
                                   </p>
                                 </div>
@@ -7785,12 +7724,11 @@ export default function Header(props) {
                                   return (
                                     <div
                                       key={idx}
-                                      className={`flex gap-x-3 items-center pl-5 ${
-                                        participant?.participantId ==
-                                          group?.viewSelection && group?.liShow
-                                          ? ""
-                                          : "h-0 overflow-hidden"
-                                      }`}
+                                      className={`flex gap-x-3 items-center pl-5 ${participant?.participantId ==
+                                        group?.viewSelection && group?.liShow
+                                        ? ""
+                                        : "h-0 overflow-hidden"
+                                        }`}
                                     >
                                       <img
                                         className="w-10 h-10 rounded-full object-cover"
@@ -7896,7 +7834,7 @@ export default function Header(props) {
                                   <h4 className="text-lg">
                                     {participant?.participantName}
                                     {gData?.hostebBy?.id ==
-                                    participant?.participantId ? (
+                                      participant?.participantId ? (
                                       <sup className="bg-black text-white rounded-md p-1 ml-4">
                                         Host
                                       </sup>
@@ -7904,18 +7842,18 @@ export default function Header(props) {
                                       <div>
                                         {gData?.hostebBy?.id ==
                                           localStorage.getItem("userId") && (
-                                          <div
-                                            className="w-8 h-8 bg-red-50 rounded-full flex items-center justify-center p-2 absolute right-0 top-0 cursor-pointer"
-                                            onClick={() =>
-                                              removeMember(
-                                                gData?.orderId,
-                                                participant?.participantId
-                                              )
-                                            }
-                                          >
-                                            <RiDeleteBinLine />
-                                          </div>
-                                        )}
+                                            <div
+                                              className="w-8 h-8 bg-red-50 rounded-full flex items-center justify-center p-2 absolute right-0 top-0 cursor-pointer"
+                                              onClick={() =>
+                                                removeMember(
+                                                  gData?.orderId,
+                                                  participant?.participantId
+                                                )
+                                              }
+                                            >
+                                              <RiDeleteBinLine />
+                                            </div>
+                                          )}
                                       </div>
                                     )}
                                   </h4>
@@ -7923,12 +7861,11 @@ export default function Header(props) {
                                     Choosing items &bull;{" "}
                                     {participant?.items?.length} items{" "}
                                     <IoIosArrowDown
-                                      className={`${
-                                        participant?.participantId ===
-                                          group?.viewSelection && group.liShow
-                                          ? "rotate-180"
-                                          : ""
-                                      }`}
+                                      className={`${participant?.participantId ===
+                                        group?.viewSelection && group.liShow
+                                        ? "rotate-180"
+                                        : ""
+                                        }`}
                                     />
                                   </p>
                                 </div>
@@ -7939,12 +7876,11 @@ export default function Header(props) {
                                   return (
                                     <div
                                       key={idx}
-                                      className={`flex gap-x-3 items-center pl-5 ${
-                                        participant?.participantId ==
-                                          group?.viewSelection && group?.liShow
-                                          ? ""
-                                          : "h-0 overflow-hidden"
-                                      }`}
+                                      className={`flex gap-x-3 items-center pl-5 ${participant?.participantId ==
+                                        group?.viewSelection && group?.liShow
+                                        ? ""
+                                        : "h-0 overflow-hidden"
+                                        }`}
                                     >
                                       <img
                                         className="w-10 h-10 rounded-full object-cover"
@@ -8108,24 +8044,23 @@ export default function Header(props) {
       {!headerSearch.isOpen &&
         (props.home ? (
           <header
-            className={`z-20 font-sf shadow w-full mx-auto bg-white ${
-              isAbsolute ? "nav-css fixed w-full top-0 z-50" : "absolute w-full"
-            }`}
+            className={`z-20 font-sf shadow w-full mx-auto bg-white ${isAbsolute ? "nav-css fixed w-full top-0 z-50" : "absolute w-full"
+              }`}
           >
             <div className="z-20 font-sf max-w-[1200px] w-full mx-auto">
               <div
-                className={`flex justify-between items-center mx-auto before-bg2 relative pe-4 sm:pe-[30px]`}
+                className={`flex justify-between items-center mx-auto  relative pe-4 sm:pe-[30px]`}
               >
                 <div
                   //   to={"/"}
                   onClick={handleLogoClick}
-                  className={`bg-[#de2c35] ps-4 sm:ps-[30px]`}
+                  className={``}
                 >
                   <div>
                     <img
-                      src="/images/logo2.gif"
+                      src={headerSettings?.logo ? `${BASE_URL}${headerSettings.logo}` : '/images/burger-logo.png'}
                       alt="fomino"
-                      className="lg:w-[264px] w-24 md:h-[70px] h-16 object-contain lg:object-cover"
+                      className=" ps-[20px] md:h-[70px] h-16 object-contain lg:object-contain"
                     />
                   </div>
                 </div>
@@ -8219,11 +8154,10 @@ export default function Header(props) {
                               />
                             ) : (
                               <div className="initials text-center flex justify-center items-center w-full h-full text-lg">
-                                {`${
-                                  extractFirstLetters(
-                                    localStorage.getItem("userName")
-                                  )?.firstLetter
-                                }`}
+                                {`${extractFirstLetters(
+                                  localStorage.getItem("userName")
+                                )?.firstLetter
+                                  }`}
                               </div>
                             )
                           ) : (
@@ -8240,11 +8174,10 @@ export default function Header(props) {
                             setDrawerCart(true);
                             // handleRecomendedItem(); // Now using TanStack Query hook directly
                           }}
-                          className={`md:w-[40px] w-10 md:h-[40px] h-10 rounded-fullest flex justify-center items-center text-theme-red relative ${
-                            props?.resDetail && !isAbsolute
-                              ? "inset-0 bg-lightTransparant rounded-full backdrop-blur-xl hover:cursor-pointer hover:bg-opacity-20 text-white"
-                              : "bg-theme-gray-11"
-                          }`}
+                          className={`md:w-[40px] w-10 md:h-[40px] h-10 rounded-fullest flex justify-center items-center text-theme-red relative ${props?.resDetail && !isAbsolute
+                            ? "inset-0 bg-lightTransparant rounded-full backdrop-blur-xl hover:cursor-pointer hover:bg-opacity-20 text-white"
+                            : "bg-theme-gray-11"
+                            }`}
                         >
                           <CustomCartIcon
                             color={
@@ -8285,30 +8218,28 @@ export default function Header(props) {
           </header>
         ) : props.rest ? (
           <header
-            className={`z-20 font-sf ${
-              isAbsolute
-                ? "nav-css fixed top-0 z-50 shadow border-0 bg-white"
-                : "absolute w-full border-b border-[#00000022]"
-            } ${props?.resDetail ? "bg-transparent border-none" : "bg-white"}`}
+            className={`z-20 font-sf ${isAbsolute
+              ? "nav-css fixed top-0 z-50 shadow border-0 bg-white"
+              : "absolute w-full border-b border-[#00000022]"
+              } ${props?.resDetail ? "bg-transparent border-none" : "bg-white"}`}
           >
             <div className="grid grid-cols-3 items-center h-full w-full custom-max-width">
               {/* Logo and Location */}
-              <div className="flex items-center space-x-4 md:flex-1 gap-x-3 xl:gap-x-5 before-bg relative">
+              <div className="flex items-center space-x-4 md:flex-1 gap-x-3 xl:gap-x-5 relative">
                 <div
-                  className="bg-theme-red-2 px-2 md:pe-6"
+                  className=" "
                   onClick={handleLogoClick}
                 >
                   <div
-                    className={`${
-                      props?.marginLeft
-                        ? props?.marginLeft
-                        : "ml-1 smallDesktop:ml-3 desktop:ml-5 largeDesktop:ml-4"
-                    }`}
+                    className={`${props?.marginLeft
+                      ? props?.marginLeft
+                      : ""
+                      }`}
                   >
                     <img
-                      src="/images/logo2.gif"
+                      src={headerSettings?.logo ? `${BASE_URL}${headerSettings.logo}` : '/images/burger-logo.png'}
                       alt="fomino"
-                      className="lg:w-[264px] w-28 md:h-[70px] h-16 object-contain lg:object-cover"
+                      className=" md:h-[70px] h-16 object-contain lg:object-cover"
                     />
                   </div>
                 </div>
@@ -8319,29 +8250,26 @@ export default function Header(props) {
                   className="lg:flex hidden items-center gap-x-2 cursor-pointer max-w-72"
                 >
                   <div
-                    className={`${
-                      props?.resDetail && isAbsolute
-                        ? "bg-theme-gray-11"
-                        : props?.resDetail && !isAbsolute
+                    className={`${props?.resDetail && isAbsolute
+                      ? "bg-theme-gray-11"
+                      : props?.resDetail && !isAbsolute
                         ? "inset-0 !bg-lightTransparant rounded-full backdrop-blur-xl hover:cursor-pointer hover:bg-opacity-20"
                         : ""
-                    } bg-theme-gray-11 p-2 flex justify-center items-center text-theme-red rounded-fullest`}
+                      } bg-theme-gray-11 p-2 flex justify-center items-center text-theme-red rounded-fullest`}
                   >
                     <GrLocation
                       size={20}
-                      className={`${
-                        props?.resDetail && !isAbsolute
-                          ? "text-white"
-                          : "text-theme-red"
-                      }`}
+                      className={`${props?.resDetail && !isAbsolute
+                        ? "text-white"
+                        : "text-theme-red"
+                        }`}
                     />
                   </div>
                   <div
-                    className={`font-medium text-sm font-sf ${
-                      props?.resDetail && !isAbsolute
-                        ? "text-white"
-                        : "text-theme-red"
-                    }`}
+                    className={`font-medium text-sm font-sf ${props?.resDetail && !isAbsolute
+                      ? "text-white"
+                      : "text-theme-red"
+                      }`}
                   >
                     <h6 className="flex gap-x-1 items-center">
                       {displayAddress}
@@ -8366,29 +8294,26 @@ export default function Header(props) {
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
                     onFocus={() => setIsFocused(true)}
-                    className={`rounded-full py-2.5 pl-10 pr-5 extraSmall:w-full small:w-48 md:w-[280px] focus:outline-none font-medium text-sm placeholder:text-black placeholder:text-opacity-40 ${
-                      props?.resDetail && !isAbsolute
-                        ? "inset-0 bg-lightTransparant rounded-full backdrop-blur-xl hover:cursor-pointer hover:bg-opacity-20 text-white !placeholder-white"
-                        : "bg-theme-gray-12"
-                    }`}
+                    className={`rounded-full py-2.5 pl-10 pr-5 extraSmall:w-full small:w-48 md:w-[280px] focus:outline-none font-medium text-sm placeholder:text-black placeholder:text-opacity-40 ${props?.resDetail && !isAbsolute
+                      ? "inset-0 bg-lightTransparant rounded-full backdrop-blur-xl hover:cursor-pointer hover:bg-opacity-20 text-white !placeholder-white"
+                      : "bg-theme-gray-12"
+                      }`}
                     placeholder={t("Search in Fomino...")}
                   />
                   <IoSearch
                     size={20}
-                    className={`absolute top-1/2 -translate-y-1/2 left-4 pointer-events-none ${
-                      props?.resDetail && !isAbsolute
-                        ? "text-white"
-                        : "text-theme-black-2"
-                    }`}
+                    className={`absolute top-1/2 -translate-y-1/2 left-4 pointer-events-none ${props?.resDetail && !isAbsolute
+                      ? "text-white"
+                      : "text-theme-black-2"
+                      }`}
                   />
                 </div>
               </div>
 
               {/* Profile + Cart OR Login/Signup */}
               <div
-                className={`flex justify-end items-center space-x-4 md:flex-1 cart-margin ${
-                  props.resDetail ? "cart-margin2" : ""
-                }`}
+                className={`flex justify-end items-center space-x-4 md:flex-1 cart-margin ${props.resDetail ? "cart-margin2" : ""
+                  }`}
               >
                 {localStorage.getItem("loginStatus") === "true" ? (
                   cartItems?.length > 0 ? (
@@ -8403,11 +8328,10 @@ export default function Header(props) {
                       >
                         <div
                           onClick={() => setDrawer(true)}
-                          className={`flex items-center justify-between cursor-pointer rounded-full py-[2px] px-[3px] pe-1 w-[73px] ${
-                            props?.resDetail && !isAbsolute
-                              ? "inset-0 bg-lightTransparant rounded-full backdrop-blur-xl hover:cursor-pointer hover:bg-opacity-20 text-white"
-                              : "bg-theme-gray-11"
-                          }`}
+                          className={`flex items-center justify-between cursor-pointer rounded-full py-[2px] px-[3px] pe-1 w-[73px] ${props?.resDetail && !isAbsolute
+                            ? "inset-0 bg-lightTransparant rounded-full backdrop-blur-xl hover:cursor-pointer hover:bg-opacity-20 text-white"
+                            : "bg-theme-gray-11"
+                            }`}
                         >
                           <div className="rounded-fullest flex justify-center items-center md:w-[35px] md:h-[34px] sm:h-12 h-10 sm:w-12 w-10 font-semibold bg-theme-red bg-opacity-40 text-white border-2 border-white">
                             <div className="w-full h-full flex justify-center items-center">
@@ -8446,36 +8370,35 @@ export default function Header(props) {
                       </button>
                       {props?.discovery
                         ? allCarts?.length > 0 && (
-                            <button
-                              onClick={() => {
-                                setDrawerCart(true);
-                                refetchAllCarts();
-                                // handleRecomendedItem(); // Now using TanStack Query hook directly
-                              }}
-                              className=" bg-theme-gray-11 md:w-[40px] w-10 md:h-[40px] h-10 rounded-fullest flex justify-center items-center text-theme-red relative"
-                            >
-                              <CustomCartIcon size={20} color="#DE2D35" />
-                              <div className="absolute top-1 right-0 w-4 h-4 flex justify-center items-center bg-theme-red text-white text-xs rounded-fullest">
-                                {allCarts.length}
-                              </div>
-                            </button>
-                          )
+                          <button
+                            onClick={() => {
+                              setDrawerCart(true);
+                              refetchAllCarts();
+                              // handleRecomendedItem(); // Now using TanStack Query hook directly
+                            }}
+                            className=" bg-theme-gray-11 md:w-[40px] w-10 md:h-[40px] h-10 rounded-fullest flex justify-center items-center text-theme-red relative"
+                          >
+                            <CustomCartIcon size={20} color="#DE2D35" />
+                            <div className="absolute top-1 right-0 w-4 h-4 flex justify-center items-center bg-theme-red text-white text-xs rounded-fullest">
+                              {allCarts.length}
+                            </div>
+                          </button>
+                        )
                         : gData &&
                           ((isGroupItemsExists && isHost) ||
                             existingCartItems?.length > 0) &&
                           activeResData?.id === groupData?.restaurant?.id
-                        ? null
-                        : cartItems?.length > 0 && (
+                          ? null
+                          : cartItems?.length > 0 && (
                             <button
                               onClick={() => {
                                 setDrawerCart(true);
                                 // handleRecomendedItem(); // Now using TanStack Query hook directly
                               }}
-                              className={`md:w-[40px] w-10 md:h-[40px] h-10 rounded-fullest flex justify-center items-center text-theme-red relative ${
-                                props?.resDetail && !isAbsolute
-                                  ? "inset-0 bg-lightTransparant rounded-full backdrop-blur-xl hover:cursor-pointer hover:bg-opacity-20 text-white"
-                                  : "bg-theme-gray-11"
-                              }`}
+                              className={`md:w-[40px] w-10 md:h-[40px] h-10 rounded-fullest flex justify-center items-center text-theme-red relative ${props?.resDetail && !isAbsolute
+                                ? "inset-0 bg-lightTransparant rounded-full backdrop-blur-xl hover:cursor-pointer hover:bg-opacity-20 text-white"
+                                : "bg-theme-gray-11"
+                                }`}
                             >
                               <CustomCartIcon
                                 color={
@@ -8498,11 +8421,10 @@ export default function Header(props) {
                     // ✅ Logged in + no cart
                     <div
                       onClick={() => setDrawer(true)}
-                      className={`flex items-center justify-between cursor-pointer rounded-full py-[2px] px-[3px] pe-1 w-[73px] ${
-                        props?.resDetail && !isAbsolute
-                          ? "inset-0 bg-lightTransparant rounded-full backdrop-blur-xl hover:cursor-pointer hover:bg-opacity-20 text-white"
-                          : "bg-theme-gray-11"
-                      }`}
+                      className={`flex items-center justify-between cursor-pointer rounded-full py-[2px] px-[3px] pe-1 w-[73px] ${props?.resDetail && !isAbsolute
+                        ? "inset-0 bg-lightTransparant rounded-full backdrop-blur-xl hover:cursor-pointer hover:bg-opacity-20 text-white"
+                        : "bg-theme-gray-11"
+                        }`}
                     >
                       <div className="rounded-fullest flex justify-center items-center md:w-[35px] md:h-[35px] sm:h-12 h-10 sm:w-12 w-10 font-semibold bg-theme-red bg-opacity-40 text-white border-2 border-white">
                         <div className="w-full h-full flex justify-center items-center">
@@ -8546,22 +8468,20 @@ export default function Header(props) {
                     <div className="flex gap-x-2 md:h-[40px]">
                       <button
                         onClick={() => setModal(true)}
-                        className={`flex justify-center items-center font-medium sm:text-sm text-xs py-3 sm:px-5 px-3 sm:w-24 w-20 rounded-full bg-transparent border border-transparent hover:border-theme-gray-11 hover:bg-theme-gray-11 ${
-                          props?.resDetail && !isAbsolute
-                            ? "text-white"
-                            : "text-theme-black-2"
-                        }`}
+                        className={`flex justify-center items-center font-medium sm:text-sm text-xs py-3 sm:px-5 px-3 sm:w-24 w-20 rounded-full bg-transparent border border-transparent hover:border-theme-gray-11 hover:bg-theme-gray-11 ${props?.resDetail && !isAbsolute
+                          ? "text-white"
+                          : "text-theme-black-2"
+                          }`}
                       >
                         Log in
                       </button>
                       <button
                         onClick={() => setSignUpModal(true)}
                         className={`flex justify-center items-center font-medium sm:text-sm text-xs py-3 sm:px-5 px-3 sm:w-24 w-20 rounded-full bg-theme-red-2 bg-opacity-10 hover:bg-opacity-20 border border-theme-gray-11 text-theme-red-2"
-                            ${
-                              props?.resDetail && !isAbsolute
-                                ? "text-white bg-white"
-                                : "text-theme-red-2"
-                            }
+                            ${props?.resDetail && !isAbsolute
+                            ? "text-white bg-white"
+                            : "text-theme-red-2"
+                          }
                        `}
                       >
                         Sign up
@@ -8574,11 +8494,10 @@ export default function Header(props) {
                         setDrawerCart(true);
                         handleRecomendedItem();
                       }}
-                      className={`md:w-[40px] w-10 md:h-[40px] h-10 rounded-fullest flex justify-center items-center text-theme-red relative ${
-                        props?.resDetail && !isAbsolute
-                          ? "inset-0 bg-lightTransparant rounded-full backdrop-blur-xl hover:cursor-pointer hover:bg-opacity-20 text-white"
-                          : "bg-theme-gray-11"
-                      }`}
+                      className={`md:w-[40px] w-10 md:h-[40px] h-10 rounded-fullest flex justify-center items-center text-theme-red relative ${props?.resDetail && !isAbsolute
+                        ? "inset-0 bg-lightTransparant rounded-full backdrop-blur-xl hover:cursor-pointer hover:bg-opacity-20 text-white"
+                        : "bg-theme-gray-11"
+                        }`}
                     >
                       <CustomCartIcon
                         color={
@@ -8598,21 +8517,19 @@ export default function Header(props) {
                   <div className="flex gap-x-2 md:h-[40px]">
                     <button
                       onClick={() => setModal(true)}
-                      className={`flex justify-center items-center font-medium sm:text-sm text-xs py-3 sm:px-5 px-3 sm:w-24 w-20 rounded-full bg-transparent border border-transparent hover:border-theme-gray-11 hover:bg-theme-gray-11 ${
-                        props?.resDetail && !isAbsolute
-                          ? "text-white"
-                          : "text-theme-black-2"
-                      }`}
+                      className={`flex justify-center items-center font-medium sm:text-sm text-xs py-3 sm:px-5 px-3 sm:w-24 w-20 rounded-full bg-transparent border border-transparent hover:border-theme-gray-11 hover:bg-theme-gray-11 ${props?.resDetail && !isAbsolute
+                        ? "text-white"
+                        : "text-theme-black-2"
+                        }`}
                     >
                       Log in
                     </button>
                     <button
                       onClick={() => setSignUpModal(true)}
                       className={`flex justify-center items-center font-medium sm:text-sm text-xs py-3 sm:px-5 px-3 sm:w-24 w-20 rounded-full bg-theme-red-2 bg-opacity-10 hover:bg-opacity-20 border border-theme-gray-11 text-theme-red-2"
-                        ${
-                          props?.resDetail && !isAbsolute
-                            ? "text-white bg-white"
-                            : "text-theme-red-2"
+                        ${props?.resDetail && !isAbsolute
+                          ? "text-white bg-white"
+                          : "text-theme-red-2"
                         }
                    `}
                     >
@@ -8622,19 +8539,18 @@ export default function Header(props) {
                 )}
 
                 {gData &&
-                isHost && // ⬅️ ONLY host can see
-                (isGroupItemsExists || existingCartItems?.length > 0) &&
-                activeResData?.id === groupData?.restaurant?.id ? (
+                  isHost && // ⬅️ ONLY host can see
+                  (isGroupItemsExists || existingCartItems?.length > 0) &&
+                  activeResData?.id === groupData?.restaurant?.id ? (
                   <button
                     onClick={() => {
                       setDrawerCart(true);
                       handleRecomendedItem();
                     }}
-                    className={`w-max md:h-[40px] h-10 hidden lg:flex rounded-md font-semibold  gap-x-2 px-8 justify-center items-center text-white relative ${
-                      props?.resDetail && !isAbsolute
-                        ? "inset-0 bg-lightTransparant rounded-full backdrop-blur-xl hover:cursor-pointer hover:bg-opacity-20 text-white"
-                        : "bg-theme-red"
-                    }`}
+                    className={`w-max md:h-[40px] h-10 hidden lg:flex rounded-md font-semibold  gap-x-2 px-8 justify-center items-center text-white relative ${props?.resDetail && !isAbsolute
+                      ? "inset-0 bg-lightTransparant rounded-full backdrop-blur-xl hover:cursor-pointer hover:bg-opacity-20 text-white"
+                      : "bg-theme-red"
+                      }`}
                   >
                     View Order
                   </button>
@@ -8663,9 +8579,8 @@ export default function Header(props) {
             ) : (
               <div
                 onClick={() => setAddressModal(true)}
-                className={`lg:hidden flex items-center gap-x-2 cursor-pointer py-3 px-3 md:px-5 ${
-                  isAbsolute ? "relative" : "absolute w-full"
-                }`}
+                className={`lg:hidden flex items-center gap-x-2 cursor-pointer py-3 px-3 md:px-5 ${isAbsolute ? "relative" : "absolute w-full"
+                  }`}
               >
                 <div className="bg-theme-gray-11 p-2 flex justify-center items-center text-theme-red rounded-fullest">
                   <GrLocation size={20} />
@@ -8763,8 +8678,8 @@ export default function Header(props) {
                         ? 190
                         : 10
                       : sm
-                      ? 550
-                      : "90svh",
+                        ? 550
+                        : "90svh",
                 }}
                 exit={{ height: 0 }}
                 transition={{ duration: 0.3 }}

@@ -77,8 +77,8 @@ export default function Restaurants() {
 
   const apiUrl =
     lat && lng
-      ? `users/home3?lat=${lat}&lng=${lng}`
-      : `users/home3?cityName=${cityName}`;
+      ? `users/home3ForSingleVendor?lat=${lat}&lng=${lng}`
+      : `users/home3ForSingleVendor?cityName=${cityName}`;
   const { data, error, isLoading } = GetAPI(apiUrl);
   //   const { data, error, isLoading } = useRestaurants(cityName, lat, lng);
 
@@ -498,16 +498,16 @@ export default function Restaurants() {
           cuisinesFromUrl.length === 0
             ? true
             : restaurant.cusinesList?.some((cuisine) =>
-                cuisinesFromUrl.includes(cuisine?.cuisine?.id)
-              )
+              cuisinesFromUrl.includes(cuisine?.cuisine?.id)
+            )
       );
     } else if (tab === "Stores") {
       filteredItems = (data?.data?.storeList?.storeList || []).filter((store) =>
         cuisinesFromUrl.length === 0
           ? true
           : store.cusinesList?.some((cuisine) =>
-              cuisinesFromUrl.includes(cuisine?.cuisine?.id)
-            )
+            cuisinesFromUrl.includes(cuisine?.cuisine?.id)
+          )
       );
     }
 
@@ -607,37 +607,40 @@ export default function Restaurants() {
   useEffect(() => {
     if (data?.data) {
       const initialLoadingState = {};
-      
+
       // Initialize banners
-      const banners = tab === "Restaurants" 
-        ? data?.data?.restaurantBanners 
-        : data?.data?.storeBanners;
-      banners?.forEach(banner => {
+      const banners =
+        tab === "Restaurants"
+          ? data?.data?.restaurantBanners
+          : data?.data?.storeBanners;
+      banners?.forEach((banner) => {
         initialLoadingState[banner.id] = true;
       });
-      
+
       // Initialize categories
-      const categories = tab === "Restaurants"
-        ? data?.data?.RestaurantMenuCategories
-        : data?.data?.storeMenuCategories;
-      categories?.forEach(category => {
+      const categories =
+        tab === "Restaurants"
+          ? data?.data?.RestaurantMenuCategories
+          : data?.data?.storeMenuCategories;
+      categories?.forEach((category) => {
         initialLoadingState[category.id] = true;
       });
-      
+
       // Initialize restaurants/stores
-      const items = tab === "Restaurants"
-        ? [
+      const items =
+        tab === "Restaurants"
+          ? [
             ...(data?.data?.restaurantList?.popularRestaurants || []),
-            ...(data?.data?.restaurantList?.restaurantList || [])
+            ...(data?.data?.restaurantList?.restaurantList || []),
           ]
-        : [
+          : [
             ...(data?.data?.storeList?.popularStores || []),
-            ...(data?.data?.storeList?.storeList || [])
+            ...(data?.data?.storeList?.storeList || []),
           ];
-      items?.forEach(item => {
+      items?.forEach((item) => {
         initialLoadingState[item.id] = true;
       });
-      
+
       setLoadingMap(initialLoadingState);
     }
   }, [data, tab]);
@@ -740,13 +743,12 @@ export default function Restaurants() {
                           <button
                             key={`restaurant-${index}`}
                             onClick={() => handleCuisineSelect(menu?.id)}
-                            className={`sm:py-1.5 py-1.5 sm:px-3 px-2 font-medium text-sm rounded-full ${
-                              filterData?.find(
-                                (ele) => parseInt(ele) === menu?.id
-                              )
-                                ? "text-white bg-theme-green-2"
-                                : "text-theme-green-2 bg-theme-green-4"
-                            }`}
+                            className={`sm:py-1.5 py-1.5 sm:px-3 px-2 font-medium text-sm rounded-full ${filterData?.find(
+                              (ele) => parseInt(ele) === menu?.id
+                            )
+                              ? "text-white bg-theme-green-2"
+                              : "text-theme-green-2 bg-theme-green-4"
+                              }`}
                           >
                             <span className="capitalize">
                               {menu?.name?.replace(/^\p{Emoji}+/u, "").trim()}
@@ -759,13 +761,12 @@ export default function Restaurants() {
                         <button
                           key={`store-${index}`}
                           onClick={() => handleCuisineSelect(menu.id)}
-                          className={`sm:py-2.5 py-1.5 sm:px-4 px-3 font-medium text-sm rounded-full font-sf ${
-                            filterData?.find(
-                              (ele) => parseInt(ele) === menu?.id
-                            )
-                              ? "text-white bg-theme-green-2"
-                              : "text-theme-green-2 bg-theme-green-4"
-                          }`}
+                          className={`sm:py-2.5 py-1.5 sm:px-4 px-3 font-medium text-sm rounded-full font-sf ${filterData?.find(
+                            (ele) => parseInt(ele) === menu?.id
+                          )
+                            ? "text-white bg-theme-green-2"
+                            : "text-theme-green-2 bg-theme-green-4"
+                            }`}
                         >
                           <span className="capitalize">
                             {" "}
@@ -807,11 +808,10 @@ export default function Restaurants() {
                       onClick={() => {
                         handleSort(sorting);
                       }}
-                      className={`sm:py-1 py-1.5 sm:px-3 px-2 font-medium text-sm rounded-full border-2 border-[#e4e4e5] text-theme-black-2 text-opacity-65 hover:bg-theme-green-2 hover:bg-opacity-10 hover:border-theme-green-2 ${
-                        sorting === sort
-                          ? " border-theme-green-2 text-opacity-65 "
-                          : "bg-transparent  "
-                      }`}
+                      className={`sm:py-1 py-1.5 sm:px-3 px-2 font-medium text-sm rounded-full border-2 border-[#e4e4e5] text-theme-black-2 text-opacity-65 hover:bg-theme-green-2 hover:bg-opacity-10 hover:border-theme-green-2 ${sorting === sort
+                        ? " border-theme-green-2 text-opacity-65 "
+                        : "bg-transparent  "
+                        }`}
                     >
                       {t(sorting)}
                     </button>
@@ -827,15 +827,14 @@ export default function Restaurants() {
                   ? handleFilter
                   : closeModal
               }
-              className={`w-full py-[15px] rounded-md font-bold font-sf shadow-buttonShadow ${
-                filterData?.length > 0 || sort !== initialSort
-                  ? "bg-theme-red text-white"
-                  : "bg-theme-red bg-opacity-20 text-theme-red"
-              }`}
+              className={`w-full py-[15px] rounded-md font-bold font-sf shadow-buttonShadow ${filterData?.length > 0 || sort !== initialSort
+                ? "bg-theme-red text-white"
+                : "bg-theme-red bg-opacity-20 text-theme-red"
+                }`}
             >
               {filterData?.length > 0 || sort !== initialSort
                 ? t("Apply") +
-                  (filterData?.length > 0 ? ` (${filterDataCount} found)` : "")
+                (filterData?.length > 0 ? ` (${filterDataCount} found)` : "")
                 : t("Close")}
             </button>
           </ModalFooter>
@@ -851,66 +850,45 @@ export default function Restaurants() {
       />
       {
         <section className="relative">
-          <section className={`relative space-y-12 font-sf `}>
-            <div className="relative px-[30px]  flex justify-center md:pt-24 pt-24 store-selection w-[92%] lg:w-[95%] largeDesktop:w-[95%] extraLargeDesktop:w-[83.34%] mx-auto space-y-3 custom-max-width">
+          <section className={`relative space-y-4 font-sf `}>
+            <div className="relative   flex justify-center md:pt-28 pt-24 store-selection w-[92%] lg:w-[95%] largeDesktop:w-[95%] extraLargeDesktop:w-[83.34%] mx-auto space-y-3 custom-max-width">
               {!sm && (
                 <>
-                  <div className="w-fit flex bg-theme-gray-3 p-1 rounded-full ms-8 ">
-                    <button
-                      onClick={() => {
-                        navigate(`/${countryCode}/${cityName}/restaurants`);
-                        setTab("Restaurants");
-                        setSearchTerm("");
-                        setPending("recent");
-                        setIsMap(true);
-                      }}
-                      className={`sm:py-2.5 py-1.5 sm:px-5 px-3 text-black rounded-full sm:font-medium font-medium text-sm flex justify-center items-center gap-x-2 ${
-                        tab === "Restaurants" ? "bg-white" : "text-opacity-40"
-                      }`}
-                    >
-                      <img
-                        src={`/images/restaurants/fork${
-                          tab === "Restaurants" ? "" : "-gray"
-                        }.webp`}
-                        alt="fork"
-                        className="w-5"
-                      />
-                      {t("Restaurants")}
-                    </button>
-                    <button
-                      onClick={() => {
-                        navigate(`/${countryCode}/${cityName}/stores`);
-                        setTab("Stores");
-                        setSearchTerm("");
-                        setPending("recent");
-                        setIsMap(true);
-                      }}
-                      className={`sm:py-2.5 py-1.5 sm:px-5 px-3 text-black rounded-full sm:font-medium font-medium text-sm flex justify-center items-center gap-x-2 ${
-                        tab === "Stores" ? "bg-white" : "text-opacity-40"
-                      }`}
-                    >
-                      <img
-                        src={`/images/restaurants/bag${
-                          tab === "Stores" ? "" : "-gray"
-                        }.webp`}
-                        alt="fork"
-                        className="w-5"
-                      />
-                      {t("Stores")}
-                    </button>
-                  </div>
+                  <div className=" w-full flex justify-between">
+                    <div className="space-y-5">
+                      <h3 className="font-omnes font-bold md:text-[40px] lg:text-[48px] text-3xl text-theme-black-2">
+                        Restaurants Near me
+                      </h3>
+                      <div className="flex items-center gap-x-2 text-black text-opacity-65">
+                        <RiErrorWarningFill size={16} />
+                        <p className="font-sf font-normal text-xs">
+                          {t("Learn how we find and sort search results")}
+                        </p>
+                      </div>
+                    </div>
 
-                  <div className="absolute md:right-[10px] largeDesktop:right-[30px] bottom-0">
-                    <button
-                      onClick={() => setIsMap(!isMap)}
-                      className=" p-2.5 text-black rounded-full sm:font-medium font-medium text-sm flex justify-center items-center gap-x-2 bg-theme-gray-3 "
-                    >
-                      {isMap ? (
-                        <TbMapPin2 size={25} color="#202125" />
-                      ) : (
-                        <IoListSharp size={25} color="#202125" />
-                      )}
-                    </button>
+                    <div className="">
+                      <button
+                        onClick={() => setIsMap(!isMap)}
+                        className=" px-4 py-2 border border-theme-black-2 border-opacity-50 rounded-full bg-white hover:bg-blue-50 transition-colors duration-200 flex items-center gap-x-2"
+                      >
+                        {isMap ? (
+                          <>
+                            <p className="text-theme-black-2 font-medium text-opacity-85 font-sf text-sm">
+                              {" "}
+                              <span className="me-1">🗺 </span> Map view
+                            </p>
+                          </>
+                        ) : (
+                          <>
+                            <IoListSharp size={17} color="#202125 " />
+                            <span className="text-theme-black-2 font-medium text-opacity-85 font-sf text-sm">
+                              List view
+                            </span>
+                          </>
+                        )}
+                      </button>
+                    </div>
                   </div>
                 </>
               )}
@@ -926,12 +904,12 @@ export default function Restaurants() {
               isMap &&
               ((tab === "Restaurants" &&
                 data?.data?.restaurantList?.restaurantList?.length > 0) ||
-              (tab === "Stores" &&
-                data?.data?.storeList?.storeList?.length > 0) ? (
+                (tab === "Stores" &&
+                  data?.data?.storeList?.storeList?.length > 0) ? (
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.4, ease: 'easeOut' }}
+                  transition={{ duration: 0.4, ease: "easeOut" }}
                 >
                   <div className="relative w-full">
                     <div className="space-y-9 sm:space-y-12">
@@ -945,7 +923,7 @@ export default function Restaurants() {
                                   : data?.data?.storeBanners;
 
                               const filteredBanners =
-                                banners?.filter((ban) => ban?.id >= 5) || [];
+                                banners?.filter((ban) => ban?.id >= 0) || [];
 
                               const finalBanners =
                                 filteredBanners.length === 1
@@ -1023,91 +1001,33 @@ export default function Restaurants() {
                       )}
 
                       <div className="flex flex-row items-start justify-between w-[92%] lg:w-[95%] extraLargeDesktop:w-[83.34%] mx-auto custom-max-width">
-                        {!showContentAfterFilter ? (
-                          <div className="flex justify-between items-start w-full md:w-auto">
-                            <div className="space-y-6">
-                              <h3 className="font-omnes font-bold md:text-[40px] lg:text-[48px] text-3xl text-theme-black-2">
-                                {t(
-                                  tab === "Restaurants"
-                                    ? "Restaurants"
-                                    : "Stores"
-                                )}{" "}
-                                {t("Near me")}
-                              </h3>
-                              <div className="flex items-center gap-x-2 text-black text-opacity-65">
-                                <RiErrorWarningFill size={16} />
-                                <p className="font-sf font-normal text-xs">
-                                  {t(
-                                    "Learn how we find and sort search results"
-                                  )}
-                                </p>
-                              </div>
-                            </div>
-                            <button
-                              onClick={() => setModal(true)}
-                              className="pt-2 block md:hidden justify-end items-center gap-x-2 text-theme-red-2 font-sf font-medium lg:order-2 order-1"
-                            >
-                              <span className="rotate-90 sm:w-10 w-8 sm:h-10 h-8 flex justify-center items-center bg-theme-red bg-opacity-20 rounded-fullest">
-                                <img
-                                  src="/images/restaurants/filter.webp"
-                                  alt="filter"
-                                  className="w-4 h-4"
-                                />
-                              </span>
-                            </button>
-                          </div>
-                        ) : (
-                          <div className="lg:order-1 order-2 space-y-3 flex items-center justify-between w-full flex-1">
-                            <h3 className="font-omnes font-black text-3xl">
-                              {`All ${
-                                tab === "Restaurants" ? "Restaurants" : "Stores"
-                              }`}
-                            </h3>
-                            <button
-                              onClick={() => setModal(true)}
-                              className="block md:hidden justify-end items-center gap-x-2 text-theme-red-2 font-sf font-medium lg:order-2 order-1"
-                            >
-                              <span className="rotate-90 sm:w-10 w-8 sm:h-10 h-8 flex justify-center items-center bg-theme-red bg-opacity-20 rounded-fullest">
-                                <img
-                                  src="/images/restaurants/filter.webp"
-                                  alt="filter"
-                                  className="w-4 h-4"
-                                />
-                              </span>
-                            </button>
-                          </div>
-                        )}
-
-                        <div className="flex justify-end gap-x-10">
+                        <div className="flex justify-between gap-x-10  w-full">
                           <div className="flex-1 justify-center">
-                            <div className="w-fit flex bg-theme-gray-3 p-1 rounded-full ms-8">
+                            <div className="w-fit flex bg-theme-gray-3 p-1 rounded-full">
                               <button
                                 onClick={() => setOrderType("both")}
-                                className={`sm:py-1 py-1 sm:px-5 px-3 text-black rounded-full sm:font-medium font-medium text-sm flex justify-center items-center gap-x-2 ${
-                                  orderType === "both"
-                                    ? "bg-white"
-                                    : "text-opacity-40"
-                                }`}
+                                className={`sm:py-1 py-1 sm:px-5 px-3 text-black rounded-full sm:font-medium font-medium text-sm flex justify-center items-center gap-x-2 ${orderType === "both"
+                                  ? "bg-white"
+                                  : "text-opacity-40"
+                                  }`}
                               >
                                 {t("All")}
                               </button>
                               <button
                                 onClick={() => setOrderType("delivery")}
-                                className={`sm:py-1 py-1 sm:px-5 px-3 text-black rounded-full sm:font-medium font-medium text-sm flex justify-center items-center gap-x-2 ${
-                                  orderType === "delivery"
-                                    ? "bg-white"
-                                    : "text-opacity-40"
-                                }`}
+                                className={`sm:py-1 py-1 sm:px-5 px-3 text-black rounded-full sm:font-medium font-medium text-sm flex justify-center items-center gap-x-2 ${orderType === "delivery"
+                                  ? "bg-white"
+                                  : "text-opacity-40"
+                                  }`}
                               >
                                 {t("Delivery")}
                               </button>
                               <button
                                 onClick={() => setOrderType("pickup")}
-                                className={`sm:py-1 py-1 sm:px-5 px-3 text-black rounded-full sm:font-medium font-medium text-sm flex justify-center items-center gap-x-2 ${
-                                  orderType === "pickup"
-                                    ? "bg-white"
-                                    : "text-opacity-40"
-                                }`}
+                                className={`sm:py-1 py-1 sm:px-5 px-3 text-black rounded-full sm:font-medium font-medium text-sm flex justify-center items-center gap-x-2 ${orderType === "pickup"
+                                  ? "bg-white"
+                                  : "text-opacity-40"
+                                  }`}
                               >
                                 {t("Pickup")}
                               </button>
@@ -1135,105 +1055,6 @@ export default function Restaurants() {
                           </button>
                         </div>
                       </div>
-
-                      {!showContentAfterFilter &&
-                        ((data?.data?.RestaurantMenuCategories?.length > 0 &&
-                          tab === "Restaurants") ||
-                        data?.data?.storeMenuCategories?.length > 0 ? (
-                          <div className="space-y-4 w-[92%] lg:w-[95%] largeDesktop:w-[95%] extraLargeDesktop:w-[83.34%] mx-auto custom-max-width">
-                            <h6 className="font-omnes font-semibold text-theme-black-2 text-[22px] md:text-[28px]">
-                              {t("Categories")}
-                            </h6>
-                            <div className="swiper-container">
-                              <Swiper
-                                spaceBetween={10}
-                                navigation={{
-                                  nextEl: ".cat-custom-swiper-button-next",
-                                  prevEl: ".cat-custom-swiper-button-prev",
-                                }}
-                                breakpoints={{
-                                  1440: { slidesPerView: 19 },
-                                  1280: { slidesPerView: 15 },
-                                  1024: { slidesPerView: 13 },
-                                  768: { slidesPerView: 8 },
-                                  425: { slidesPerView: 5 },
-                                  375: { slidesPerView: 4 },
-                                }}
-                                modules={[Navigation]}
-                                className="[&>div>div>button]:shadow-cardShadow pb-4"
-                              >
-                                <div className="flex items-center gap-x-5">
-                                  {(tab === "Restaurants"
-                                    ? data?.data?.RestaurantMenuCategories
-                                    : data?.data?.storeMenuCategories
-                                  )?.map((cat, index) => {
-                                    const isLoading = isItemLoading(cat.id);
-                                    return (
-                                      <SwiperSlide key={index}>
-                                        <div
-                                          key={cat?.id}
-                                          className="flex flex-col items-center justify-center cursor-pointer"
-                                          onClick={() => {
-                                            const formattedName =
-                                              formatCuisineName(cat.name);
-                                            handleCusineNavigation(
-                                              cat?.id,
-                                              cat.name
-                                            );
-                                          }}
-                                        >
-                                          <Skeleton
-                                            isLoaded={!isLoading}
-                                            borderRadius="full"
-                                            height="54px"
-                                            width="54px"
-                                            startColor="gray.300"
-                                            endColor="gray.100"
-                                          >
-                                            <img
-                                              src={BASE_URL + cat?.image}
-                                              alt="categories"
-                                              className="w-16 h-16 object-contain"
-                                              onLoad={() => handleLoad(cat.id)}
-                                              style={{
-                                                display: isLoading
-                                                  ? "none"
-                                                  : "block",
-                                              }}
-                                            />
-                                          </Skeleton>
-                                          <div className="font-sf font-medium text-sm capitalize text-center mt-2">
-                                            <span className="text-ellipsis ellipsis3">
-                                              {removeEmojis(cat?.name)}
-                                            </span>
-                                          </div>
-                                        </div>
-                                      </SwiperSlide>
-                                    );
-                                  })}
-                                </div>
-                              </Swiper>
-                              <div className="swiper-btns">
-                                <div className="cat-custom-swiper-button-prev">
-                                  <FaArrowLeftLong
-                                    size={20}
-                                    color="#E13743"
-                                    className="absolute top-1/2 right-2 transform -translate-y-1/2 text-black"
-                                  />
-                                </div>
-                                <div className="cat-custom-swiper-button-next">
-                                  <FaArrowRightLong
-                                    size={20}
-                                    color="#E13743"
-                                    className="absolute top-1/2 right-2 transform -translate-y-1/2 text-black"
-                                  />
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        ) : (
-                          <></>
-                        ))}
                     </div>
                   </div>
                 </motion.div>
@@ -1243,293 +1064,105 @@ export default function Restaurants() {
           </section>
 
           {!loading &&
-            showPopular &&
-            (tab === "Restaurants" &&
-            data?.data?.restaurantList?.popularRestaurants?.length > 0 ? (
-              <section className="w-[92%] lg:w-[95%] largeDesktop:w-[95%] extraLargeDesktop:w-[83.34%] mx-auto pt-5 lg:pt-10 space-y-3 custom-max-width ">
-                <div className="flex  items-center justify-between md:pe-24">
-                  <h5 className="font-omnes  font-semibold text-theme-black-2 text-[22px] md:text-[28px]">
-                    {t("Popular right now")}
-                  </h5>
-                  <button
-                    className="text-theme-red-2 font-sf text-sm font-medium "
-                    onClick={() => {
-                      navigate(
-                        `/${countryCode}/${cityName}/restaurants/hot-this-week-venues`
-                      );
-                    }}
-                  >
-                    {t("See all")}
-                  </button>
-                </div>
-                <div className="swiper-container  ">
-                  <Swiper
-                    spaceBetween={16}
-                    slidesPerView={xl ? 4.1 : lg ? 3.1 : md ? 2.1 : 1.4}
-                    navigation={{
-                      nextEl: ".custom-swiper-button-next",
-                      prevEl: ".custom-swiper-button-prev",
-                    }}
-                    modules={[Navigation]}
-                    className="[&>div>div>button]:shadow-discoveryCardShadow pb-4 pt-1 ps-1"
-                  >
-                    {data?.data?.restaurantList?.popularRestaurants?.map(
-                      (res, index) => (
-                        <SwiperSlide key={index}>
-                          <RestaurantCard
-                            img={`${BASE_URL}${res?.image}`}
-                            logo={`${BASE_URL}${res?.logo}`}
-                            title={res?.businessName}
-                            desc={res?.description}
-                            price={res?.deliveryFee}
-                            currency={res?.units?.currencyUnit?.symbol}
-                            deliveryTime={res?.deliveryTime}
-                            deliveryFee={res?.deliveryFee}
-                            rating={res?.rating}
-                            isOpen={res?.isOpen}
-                            isRushMode={res?.isRushMode}
-                            openingTime={res?.openingTime}
-                            closingTime={res?.closingTime}
-                            completelyClosed={res?.completelyClosed}
-                            getConfiguration={res?.getConfiguration}
-                            restBanners={res?.restBanners}
-                            time={res.time}
-                            onClick={() => {
-                              resDetails(
-                                res?.id,
-                                res?.businessName.toLowerCase(),
-                                res?.businessType
-                              );
-                              localStorage.removeItem("how");
-                              localStorage.removeItem("when");
-                            }}
-                            logoWidth="w-[60px] h-[60px]"
-                            size="sm"
-                            id={res?.id}
-                            loadingMap={loadingMap}
-                            handleLoad={handleLoad}
-                          />
-                        </SwiperSlide>
-                      )
-                    )}
-                  </Swiper>
-
-                  <div className="swiper-btns hidden md:block">
-                    <div className="custom-swiper-button-prev ">
-                      <FaArrowLeftLong
-                        size={20}
-                        color="#E13743"
-                        className="absolute top-1/2 right-2 transform -translate-y-1/2 text-black"
-                      />
-                    </div>
-                    <div className="custom-swiper-button-next">
-                      <FaArrowRightLong
-                        size={20}
-                        color="#E13743"
-                        className="absolute top-1/2 right-2 transform -translate-y-1/2 text-black"
-                      />
-                    </div>
-                  </div>
-                </div>
-              </section>
-            ) : tab === "Stores" &&
-              data?.data?.storeList?.popularStores?.length > 0 ? (
-              <section className="w-[92%] lg:w-[95%] largeDesktop:w-[95%] extraLargeDesktop:w-[83.34%] mx-auto pt-16 space-y-3 custom-max-width ">
-                <div className="flex  items-center justify-between md:pe-24">
-                  <h5 className="font-omnes  font-semibold text-theme-black-2 text-[22px] md:text-[28px]">
-                    {t("Popular right now")}
-                  </h5>
-                  <button
-                    className="text-theme-red-2 font-sf text-sm font-medium "
-                    onClick={() => {
-                      navigate(
-                        `/${countryCode}/${cityName}/restaurants/hot-this-week-venues`
-                      );
-                    }}
-                  >
-                    {t("See all")}
-                  </button>
-                </div>
-                <div className="swiper-container !p-1">
-                  <Swiper
-                    spaceBetween={16}
-                    slidesPerView={xl ? 4.1 : lg ? 3.1 : md ? 2.2 : 1.2}
-                    navigation={{
-                      nextEl: ".custom-swiper-button-next",
-                      prevEl: ".custom-swiper-button-prev",
-                    }}
-                    modules={[Navigation]}
-                    className="[&>div>div>button]:shadow-cardShadow pb-4 pt-1 ps-1"
-                  >
-                    {data?.data?.storeList?.popularStores?.map(
-                      (store, index) => (
-                        <SwiperSlide key={index}>
-                          <RestaurantCard
-                            img={`${BASE_URL}${store?.image}`}
-                            logo={`${BASE_URL}${store?.logo}`}
-                            title={store?.businessName}
-                            desc={store?.description}
-                            price={store?.deliveryFee}
-                            currency={store?.units?.currencyUnit?.symbol}
-                            deliveryFee={store?.deliveryFee}
-                            deliveryTime={store?.deliveryTime}
-                            rating={store?.rating}
-                            isOpen={store?.isOpen}
-                            isRushMode={store?.isRushMode}
-                            openingTime={store?.openingTime}
-                            closingTime={store?.closingTime}
-                            completelyClosed={store?.completelyClosed}
-                            getConfiguration={store?.getConfiguration}
-                            restBanners={store?.restBanners}
-                            time={store.time}
-                            onClick={() => {
-                              resDetails(
-                                store?.id,
-                                store.businessName.toLowerCase(),
-                                store?.businessType
-                              );
-                              localStorage.removeItem("how");
-                              localStorage.removeItem("when");
-                            }}
-                            logoWidth="w-[60px] h-[60px]"
-                            size="sm"
-                            id={store?.id}
-                            loadingMap={loadingMap}
-                            handleLoad={handleLoad}
-                          />
-                        </SwiperSlide>
-                      )
-                    )}
-                  </Swiper>
-                  <div className="swiper-btns">
-                    <div className="custom-swiper-button-prev">
-                      <FaArrowLeftLong
-                        size={20}
-                        color="#E13743"
-                        className="absolute top-1/2 right-2 transform -translate-y-1/2 text-black"
-                      />
-                    </div>
-                    <div className="custom-swiper-button-next">
-                      <FaArrowRightLong
-                        size={20}
-                        color="#E13743"
-                        className="absolute top-1/2 right-2 transform -translate-y-1/2 text-black"
-                      />
-                    </div>
-                  </div>
-                </div>
-              </section>
-            ) : (
-              <></>
-            ))}
-          {!loading &&
             isMap &&
             ((tab === "Restaurants" &&
               data?.data?.restaurantList?.restaurantList?.length > 0) ||
-            (tab === "Stores" &&
-              data?.data?.storeList?.storeList?.length > 0) ? (
-              <section className="w-[92%] lg:w-[95%] largeDesktop:w-[95%] extraLargeDesktop:w-[83.34%] mx-auto py-12 space-y-3 custom-max-width">
+              (tab === "Stores" &&
+                data?.data?.storeList?.storeList?.length > 0) ? (
+              <section className="w-[92%] lg:w-[95%] largeDesktop:w-[95%] extraLargeDesktop:w-[83.34%] mx-auto pt-6 py-12 space-y-3 custom-max-width">
                 {!showContentAfterFilter && (
                   <h5 className="font-omnes font-semibold text-theme-black-2 text-[22px] md:text-[28px]">
                     {t("All")}{" "}
                     {tab === "Restaurants"
                       ? t("Restaurants")
                       : tab === "Stores"
-                      ? t("Stores")
-                      : ""}
+                        ? t("Stores")
+                        : ""}
                   </h5>
                 )}
 
                 <section className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-4 font-sf">
                   {filterShow && filteredData.length > 0
                     ? filteredData.map((res, index) => (
-                        <LazyLoadComponent key={index}>
-                          <RestaurantCard
-                            img={`${BASE_URL}${res?.image}`}
-                            logo={`${BASE_URL}${res?.logo}`}
-                            title={res?.businessName}
-                            desc={res?.description}
-                            price={res?.deliveryFee}
-                            currency={res?.units?.currencyUnit?.symbol}
-                            deliveryTime={res?.deliveryTime}
-                            deliveryFee={res?.deliveryFee}
-                            rating={res?.rating}
-                            isOpen={res?.isOpen}
-                            isRushMode={res.isRushMode}
-                            openingTime={res.openingTime}
-                            closingTime={res.closingTime}
-                            completelyClosed={res.completelyClosed}
-                            getConfiguration={res.getConfiguration}
-                            time={res.time}
-                            restBanners={res.restBanners}
-                            ticker="New"
-                            onClick={() => {
-                              resDetails(
-                                res?.id,
-                                res?.businessName.toLowerCase(),
-                                res?.businessType
-                              );
-                              localStorage.removeItem("how");
-                              localStorage.removeItem("when");
-                            }}
-                            logoWidth="w-20 h-20"
-                            id={res?.id}
-                            loadingMap={loadingMap}
-                            handleLoad={handleLoad}
-                          />
-                        </LazyLoadComponent>
-                      ))
+                      <LazyLoadComponent key={index}>
+                        <RestaurantCard
+                          img={`${BASE_URL}${res?.image}`}
+                          logo={`${BASE_URL}${res?.logo}`}
+                          title={res?.businessName}
+                          desc={res?.description}
+                          price={res?.deliveryFee}
+                          currency={res?.units?.currencyUnit?.symbol}
+                          deliveryTime={res?.deliveryTime}
+                          deliveryFee={res?.deliveryFee}
+                          rating={res?.rating}
+                          isOpen={res?.isOpen}
+                          isRushMode={res.isRushMode}
+                          openingTime={res.openingTime}
+                          closingTime={res.closingTime}
+                          completelyClosed={res.completelyClosed}
+                          getConfiguration={res.getConfiguration}
+                          time={res.time}
+                          restBanners={res.restBanners}
+                          ticker="New"
+                          onClick={() => {
+                            resDetails(
+                              res?.id,
+                              res?.businessName.toLowerCase(),
+                              res?.businessType
+                            );
+                            localStorage.removeItem("how");
+                            localStorage.removeItem("when");
+                          }}
+                          logoWidth="w-20 h-20"
+                          id={res?.id}
+                          loadingMap={loadingMap}
+                          handleLoad={handleLoad}
+                        />
+                      </LazyLoadComponent>
+                    ))
                     : (tab === "Restaurants"
-                        ? data?.data?.restaurantList?.restaurantList
-                        : data?.data?.storeList?.storeList
-                      )?.map((item, index) => (
-                        <LazyLoadComponent key={index}>
-                          <RestaurantCard
-                            img={`${BASE_URL}${item?.image}`}
-                            logo={`${BASE_URL}${item?.logo}`}
-                            title={item?.businessName}
-                            desc={item?.description}
-                            price={item?.deliveryFee}
-                            currency={item?.units?.currencyUnit?.symbol}
-                            deliveryTime={item?.deliveryTime}
-                            deliveryFee={item?.deliveryFee}
-                            rating={item?.rating}
-                            isOpen={item?.isOpen}
-                            isRushMode={item.isRushMode}
-                            openingTime={item.openingTime}
-                            closingTime={item.closingTime}
-                            completelyClosed={item.completelyClosed}
-                            getConfiguration={item.getConfiguration}
-                            time={item.time}
-                            restBanners={item.restBanners}
-                            onClick={() => {
-                              resDetails(
-                                item?.id,
-                                item?.businessName.toLowerCase(),
-                                item?.businessType
-                              );
-                              localStorage.removeItem("how");
-                              localStorage.removeItem("when");
-                            }}
-                            logoWidth="w-20 h-20"
-                            id={item?.id}
-                            loadingMap={loadingMap}
-                            handleLoad={handleLoad}
-                          />
-                        </LazyLoadComponent>
-                      ))}
+                      ? data?.data?.restaurantList?.restaurantList
+                      : data?.data?.storeList?.storeList
+                    )?.map((item, index) => (
+                      <LazyLoadComponent key={index}>
+                        <RestaurantCard
+                          img={`${BASE_URL}${item?.image}`}
+                          logo={`${BASE_URL}${item?.logo}`}
+                          title={item?.businessName}
+                          desc={item?.description}
+                          price={item?.deliveryFee}
+                          currency={item?.units?.currencyUnit?.symbol}
+                          deliveryTime={item?.deliveryTime}
+                          deliveryFee={item?.deliveryFee}
+                          rating={item?.rating}
+                          isOpen={item?.isOpen}
+                          isRushMode={item.isRushMode}
+                          openingTime={item.openingTime}
+                          closingTime={item.closingTime}
+                          completelyClosed={item.completelyClosed}
+                          getConfiguration={item.getConfiguration}
+                          time={item.time}
+                          restBanners={item.restBanners}
+                          onClick={() => {
+                            resDetails(
+                              item?.id,
+                              item?.businessName.toLowerCase(),
+                              item?.businessType
+                            );
+                            localStorage.removeItem("how");
+                            localStorage.removeItem("when");
+                          }}
+                          logoWidth="w-20 h-20"
+                          id={item?.id}
+                          loadingMap={loadingMap}
+                          handleLoad={handleLoad}
+                        />
+                      </LazyLoadComponent>
+                    ))}
                 </section>
               </section>
             ) : (
               <section className="2xl:w-4/5 w-11/12 mx-auto pt-16 pb-32 space-y-12 font-omnes">
-                <h3 className="font-bold text-4xl">
-                  {tab === "Restaurants"
-                    ? "Restaurants"
-                    : tab === "Stores"
-                    ? "Stores and supermarkets"
-                    : ""}{" "}
-                  near me
-                </h3>
                 <div className="flex flex-col justify-center items-center space-y-4 text-center">
                   <div>
                     <img
@@ -1543,8 +1176,8 @@ export default function Restaurants() {
                     {tab === "Restaurants"
                       ? "restaurants"
                       : tab === "Stores"
-                      ? "stores"
-                      : ""}{" "}
+                        ? "stores"
+                        : ""}{" "}
                     on Fomino <br /> near you yet 😕
                   </h4>
                   <p className="font-normal text-base font-sf">
@@ -1575,14 +1208,12 @@ export default function Restaurants() {
               navigate(`/${countryCode}/${cityName}/restaurants`);
               setMobileTab("Restaurants");
             }}
-            className={`w-20 sm:py-2.5 py-1.5 sm:px-5 px-3 text-sm text-black font-sf font-light flex flex-col justify-center items-center gap-y-1  ${
-              tab === "Restaurants" ? "bg-white" : "text-opacity-40"
-            }`}
+            className={`w-20 sm:py-2.5 py-1.5 sm:px-5 px-3 text-sm text-black font-sf font-light flex flex-col justify-center items-center gap-y-1  ${tab === "Restaurants" ? "bg-white" : "text-opacity-40"
+              }`}
           >
             <img
-              src={`/images/restaurants/fork${
-                tab === "Restaurants" ? "" : "-gray"
-              }.webp`}
+              src={`/images/restaurants/fork${tab === "Restaurants" ? "" : "-gray"
+                }.webp`}
               alt="fork"
               className="w-5"
             />
@@ -1594,14 +1225,12 @@ export default function Restaurants() {
               navigate(`/${countryCode}/${cityName}/stores`);
               setMobileTab("Stores");
             }}
-            className={`w-20 sm:py-2.5 py-1.5 sm:px-5 px-3 text-black  text-sm font-sf font-light flex flex-col justify-center items-center gap-y-1 ${
-              mobileTab === "Stores" ? "bg-white" : "text-opacity-40"
-            }`}
+            className={`w-20 sm:py-2.5 py-1.5 sm:px-5 px-3 text-black  text-sm font-sf font-light flex flex-col justify-center items-center gap-y-1 ${mobileTab === "Stores" ? "bg-white" : "text-opacity-40"
+              }`}
           >
             <img
-              src={`/images/restaurants/bag${
-                mobileTab === "Stores" ? "" : "-gray"
-              }.webp`}
+              src={`/images/restaurants/bag${mobileTab === "Stores" ? "" : "-gray"
+                }.webp`}
               alt="fork"
               className="w-5"
             />
@@ -1614,9 +1243,8 @@ export default function Restaurants() {
               setProfileDrawer(true);
               closeModal();
             }}
-            className={`w-20 sm:py-2.5 py-1.5 sm:px-5 px-3 text-black  text-sm font-sf font-light flex flex-col justify-center items-center gap-y-1 ${
-              mobileTab === "propfile" ? "bg-white" : "text-opacity-40"
-            }`}
+            className={`w-20 sm:py-2.5 py-1.5 sm:px-5 px-3 text-black  text-sm font-sf font-light flex flex-col justify-center items-center gap-y-1 ${mobileTab === "propfile" ? "bg-white" : "text-opacity-40"
+              }`}
           >
             <img
               src={`/images/restaurants/user.png`}
